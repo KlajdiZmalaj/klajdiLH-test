@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { store } from "./redux-store/store";
 
 //global styles
+
 import "antd/dist/antd.css";
 import "./styles/index.scss";
 
