@@ -5,7 +5,7 @@ import { HashRouter, Switch, Route, Redirect } from "react-router-dom";
 import * as Routes from "./routes/index";
 import { FC } from "react";
 import { IRootState } from "./redux-store/store";
-import { userPropTypes } from "./redux-store/sagas/auth.types";
+import { userPropTypes } from "./fakeData/data.types";
 
 const Root: FC = () => {
   //

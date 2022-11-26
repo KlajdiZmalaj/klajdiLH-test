@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { userPropTypes } from "../redux-store/sagas/auth.types";
+import { userPropTypes } from "../fakeData/data.types";
 import { IRootState } from "../redux-store/store";
 import logo from "../images/logo.png";
 import { AuthActions } from "../redux-store/models";

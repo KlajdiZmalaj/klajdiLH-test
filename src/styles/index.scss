@@ -1,17 +1,19 @@
 /*global styless*/
 
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap");
-
+* {
+  box-sizing: border-box;
+}
 body {
-  background-color: #f7f7f7 !important;
+  background-color: #fff !important;
   font-family: "Lato", sans-serif;
 }
 .page {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 100vh;
   background-position: center;
   padding: 70px;
-
+  padding-bottom: 100px;
   &:before {
     content: "";
     display: block;
@@ -83,6 +85,90 @@ header {
           background-color: #21356d;
           color: #d6bf10;
         }
+      }
+    }
+  }
+}
+.tableComponent {
+  display: flex;
+  flex-flow: column;
+  border: 1px solid #00000017;
+  margin-top: 30px;
+  box-shadow: 0 2px 11px -6px #000;
+  .table {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    &-header,
+    &-row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      span {
+        width: 100%;
+        padding: 0 16px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+      }
+    }
+    &-header {
+      background-color: #0000000a;
+
+      span {
+        font-weight: 600;
+      }
+    }
+    &-row {
+      transition: 0.3s;
+      cursor: pointer;
+
+      &:nth-child(odd) {
+        background-color: #00000005;
+      }
+      &:hover {
+        background-color: #0000000c;
+      }
+    }
+  }
+  h4 {
+    font-size: 16px;
+    margin: 0;
+    padding: 0 16px;
+    margin-left: 0;
+    background-color: #f3f3f3;
+    font-weight: 600;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    .ant-select {
+      margin-left: auto;
+      min-width: 200px;
+    }
+  }
+  .addNew {
+    background-color: #fdfdfd;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    button {
+      border: 1px solid #21356d;
+      font-size: 13px;
+      padding: 0 10px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      background-color: #fff;
+      transition: 0.3s;
+      cursor: pointer;
+      &:hover {
+        background-color: #1c2c59;
+        color: #d6bf10;
+      }
+      i {
+        margin-left: 5px;
       }
     }
   }

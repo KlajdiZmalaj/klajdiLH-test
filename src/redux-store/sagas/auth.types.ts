@@ -12,9 +12,3 @@ export interface registerSagaProps {
   params: login_register_ParamsProps;
   type: string;
 }
-export interface userPropTypes {
-  id?: number;
-  username: string;
-  password: string;
-  full_name?: string;
-}

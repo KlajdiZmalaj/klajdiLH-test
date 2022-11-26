@@ -7,7 +7,7 @@
   align-items: center;
   height: 100vh;
   width: 100%;
-  background: linear-gradient(45deg, #e91e63, #42a5f5);
+  background: linear-gradient(45deg, #1c2c59, #455b99);
   font-family: "Montserrat", sans-serif;
 }
 .login-box {
@@ -23,7 +23,7 @@
   border-radius: 5px;
 }
 .user-icon {
-  background: #e91e63;
+  background: #ffe000;
   border-radius: 50%;
   width: 100px;
   height: 100px;
@@ -35,7 +35,7 @@
 }
 .user-icon i {
   font-size: 40px;
-  color: #fff;
+  color: #1c2c59;
 }
 .login {
   width: 100%;
@@ -61,15 +61,15 @@
   }
   input[type="text"].form-control:hover,
   input[type="password"].form-control:hover {
-    border: 2px solid #f8bbd0;
+    border: 2px solid #4767be;
   }
   input[type="text"].form-control:focus,
   input[type="password"].form-control:focus {
-    border: 2px solid #f06292;
+    border: 2px solid #1c2c59;
   }
   input[type="text"].form-control:active,
   input[type="password"].form-control:active {
-    border: 2px solid #f06292;
+    border: 2px solid #1c2c59;
   }
   label {
     display: flex;
@@ -84,8 +84,8 @@
   }
   button {
     outline: none;
-    background: #e91e63;
-    color: #fff;
+    background: #1c2c59;
+    color: #ffe000;
     padding: 16px;
     display: block;
     width: 100%;
@@ -111,27 +111,4 @@
   text-align: center;
   margin: 20px 0;
   font-size: 12px;
-}
-.social-login {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-}
-.social-login a {
-  display: inline-block;
-  background: #f06292;
-  color: #fff;
-  padding: 16px;
-  margin-right: 20px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.social-login a:hover {
-  background: #e91e63;
-  box-shadow: 5px 5px 5px #ccc;
-}
-.social-login a i {
-  color: #fff;
-  margin-right: 10px;
 }

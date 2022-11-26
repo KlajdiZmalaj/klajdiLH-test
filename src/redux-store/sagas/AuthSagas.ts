@@ -1,8 +1,8 @@
 import { put, call, delay, select } from "redux-saga/effects";
 import { notification } from "antd";
 import AuthActions from "../models/auth";
-import { registerSagaProps, login_register_SagaProps, userPropTypes } from "./auth.types";
-
+import { registerSagaProps, login_register_SagaProps } from "./auth.types";
+import { userPropTypes } from "../../fakeData/data.types";
 //=============== AUTH SAGAS
 
 export function* login({ params }: login_register_SagaProps): Generator<any> {
