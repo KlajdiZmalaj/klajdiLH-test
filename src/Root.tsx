@@ -35,7 +35,9 @@ const Root: FC = () => {
           <Route exact path="/register">
             {loggedUser.id ? <Redirect to={"dashboard"} /> : <Routes.Login />}
           </Route>
-          <Route exact path="/dashboard" component={Routes.Dashboard} />
+          <Route exact path="/dashboard">
+            {loggedUser.id ? <Routes.Dashboard /> : <Redirect to={"login"} />}
+          </Route>
         </Switch>
       </HashRouter>{" "}
     </>

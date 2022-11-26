@@ -6,3 +6,84 @@ body {
   background-color: #f7f7f7 !important;
   font-family: "Lato", sans-serif;
 }
+.page {
+  width: 100vw;
+  height: 100vh;
+  background-position: center;
+  padding: 70px;
+
+  &:before {
+    content: "";
+    display: block;
+    margin: auto;
+    position: fixed;
+    left: -1px;
+    width: calc(100% + 1px);
+    height: 100%;
+    top: 0;
+    border-width: 69px;
+    border-image: url(https://images.getbento.com/accounts/3c10e657dc5f2aa01b55394e8376688a/media/images/1426855483border.png);
+    border-image-slice: 110;
+    border-style: solid;
+    border-image-repeat: stretch;
+    z-index: 999;
+    pointer-events: none;
+  }
+  @media (max-width: 1134px) {
+    &::before {
+      left: 0px;
+      width: 100%;
+      height: 100%;
+      top: 0px;
+      border-width: 55px;
+      border-image: url(https://images.getbento.com/accounts/3c10e657dc5f2aa01b55394e8376688a/media/images/55483border.png);
+      border-image-slice: 181 178;
+      border-image-repeat: repeat;
+    }
+  }
+}
+
+header {
+  display: flex;
+  width: 100%;
+  top: 0;
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    .logo {
+      mix-blend-mode: darken;
+      width: 200px;
+    }
+    h3 {
+      font-size: 22px;
+      font-weight: 300;
+      span {
+        font-weight: 600;
+        font-size: 19px;
+      }
+    }
+    h3,
+    .actions {
+      width: calc(100% / 3);
+    }
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      button {
+        padding: 5px 16px;
+        border: 0;
+        background-color: #1c2c59;
+        color: #ffe000;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+        &:hover {
+          background-color: #21356d;
+          color: #d6bf10;
+        }
+      }
+    }
+  }
+}

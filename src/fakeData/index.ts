@@ -5,7 +5,7 @@ export const restaurants = [
     id: 1,
     name: "Kripe dhe piper",
     assigned_managers: [],
-    menu: [], //array of items
+    menu: "menu_1", //array of items
   },
 ];
 

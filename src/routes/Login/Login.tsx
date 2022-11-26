@@ -26,6 +26,7 @@ export default () => {
         </div>
 
         <form
+          autoComplete="off"
           className="login"
           onSubmit={(e) => {
             e.preventDefault();
@@ -35,10 +36,24 @@ export default () => {
           }}
         >
           <h1>Hunger Net</h1>
+          {isRegister && (
+            <div className="form-group">
+              <input
+                type="text"
+                onChange={handleChange}
+                name="full_name"
+                placeholder="Full name"
+                id="full_name"
+                className="form-control"
+              />
+            </div>
+          )}
+
           <div className="form-group">
             <input
-              onChange={handleChange}
+              autoComplete="off"
               type="text"
+              onChange={handleChange}
               name="username"
               placeholder="Username"
               id="username"
@@ -47,6 +62,7 @@ export default () => {
           </div>
           <div className="form-group">
             <input
+              autoComplete="off"
               onChange={handleChange}
               type="password"
               name="password"
@@ -55,12 +71,7 @@ export default () => {
               className="form-control"
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="rememberme">
-              <input type="checkbox" name="rememberme" id="rememberme" />
-              Remember Password
-            </label>
-          </div>
+
           <div className="form-group">
             <button className="full-btn"> {isRegister ? "Register" : "Login"} </button>
           </div>
