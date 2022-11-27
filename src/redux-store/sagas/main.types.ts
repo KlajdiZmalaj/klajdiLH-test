@@ -18,3 +18,9 @@ export interface getUsersSagaProps {
   params: any;
   type: string;
 }
+export interface crudUserSagaProps {
+  data?: any;
+  user_id?: number;
+  type: string;
+  restore?: () => void;
+}

@@ -27,15 +27,16 @@ export default () => {
     <div className="page">
       <Navbar />
       <Table
+        type="user"
         filterKey="role"
         title="Users"
         dataSource={users.filter((u) => /*Remove other admin users */ u.role !== "admin")}
         columns={usersColumns}
       />
-      <Table title="Restaurants" dataSource={restaurants} columns={restaurantsColumns} />
-      <Table title="Menus" dataSource={[]} columns={[]} />
-      <Table title="Menu Items" dataSource={[]} columns={[]} />
-      <Table title="Orders" dataSource={[]} columns={[]} />
+      <Table type="restaurant" title="Restaurants" dataSource={restaurants} columns={restaurantsColumns} />
+      <Table type="menu" title="Menus" dataSource={[]} columns={[]} />
+      <Table type="menu_menu" title="Menu Items" dataSource={[]} columns={[]} />
+      <Table type="order" title="Orders" dataSource={[]} columns={[]} />
     </div>
   );
 };

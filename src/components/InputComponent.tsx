@@ -1,31 +1,25 @@
-import { Select } from "antd";
+import { Input, Select } from "antd";
+import TextArea from "antd/lib/input/TextArea";
 import React from "react";
 
-interface optionProps {
-  id: number;
-  color: string;
-  name: string;
-}
 interface propTypes {
-  name: string;
-  label: string;
-  setData: Function;
-  formData: any;
-  type: string;
-  style: object;
-  options: optionProps[];
-  withDotColor: boolean;
+  name?: string;
+  label?: string;
+  setData?: Function;
+  formData?: any;
+  type?: string;
+  style?: object;
+  options?: string[];
 }
 
 const InputComponent = ({
   name,
   label,
-  setData,
-  formData,
+  setData = () => {},
+  formData = {},
   type,
   style,
   options = [],
-  withDotColor,
   ...rest
 }: propTypes) => {
   return (
@@ -34,37 +28,33 @@ const InputComponent = ({
       {type === "select" ? (
         <Select
           {...rest}
-          value={formData[name]}
+          value={formData[name as keyof typeof formData]}
           onChange={(e) => {
-            setData({ ...formData, [name]: e });
+            setData({ ...formData, [name as keyof typeof e]: e });
           }}
         >
           {options.map((o) => {
             return (
-              <Select.Option
-                style={!withDotColor ? { backgroundColor: o.color, color: "#fff" } : {}}
-                key={o.id}
-                value={o.id}
-              >
-                {withDotColor && <div className="dotColor" style={{ backgroundColor: o.color }}></div>} {o.name}
+              <Select.Option key={o} value={o}>
+                {o}
               </Select.Option>
             );
           })}
         </Select>
       ) : type === "area" ? (
-        <textarea
+        <TextArea
           {...rest}
-          value={formData[name] || ""}
+          value={formData[name as keyof typeof formData] || ""}
           onChange={(e) => {
-            setData({ ...formData, [name]: e.target.value });
+            setData({ ...formData, [name as keyof typeof e]: e.target.value });
           }}
         />
       ) : (
-        <input
+        <Input
           {...rest}
-          value={formData[name] || ""}
+          value={formData[name as keyof typeof formData] || ""}
           onChange={(e) => {
-            setData({ ...formData, [name]: e.target.value });
+            setData({ ...formData, [name as keyof typeof e]: e.target.value });
           }}
         />
       )}

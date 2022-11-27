@@ -1,0 +1,18 @@
+@mixin buttonMix {
+  border: 1px solid #21356d;
+  font-size: 13px;
+  padding: 0 10px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  transition: 0.3s;
+  cursor: pointer;
+  &:hover {
+    background-color: #1c2c59;
+    color: #d6bf10;
+  }
+  i {
+    margin-left: 5px;
+  }
+}

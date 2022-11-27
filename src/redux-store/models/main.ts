@@ -9,6 +9,9 @@ const { Types, Creators } = createActions({
   //users
   getUsers: ["params"],
   setUsers: ["users"],
+  updateUser: ["data"],
+  deleteUser: ["user_id"],
+  createUser: ["data", "restore"],
 
   //restaurants
   getRestaurants: ["params"],
