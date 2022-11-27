@@ -1,17 +1,17 @@
 import { Form, Input, Select } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { userPropTypes } from "../fakeData/data.types";
+import { restaurantPropTypes, userPropTypes } from "../fakeData/data.types";
 import { MainActions } from "../redux-store/models";
 import { IRootState } from "../redux-store/store";
 export interface formPropTypes {
-  modalData?: userPropTypes;
+  modalData?: restaurantPropTypes;
   setModalData?: Function;
   isCreating: boolean;
 }
 export default ({ modalData = {}, setModalData = () => {}, isCreating }: formPropTypes) => {
   const dispatch = useDispatch();
-  const roles = useSelector<IRootState>((s) => s.main.permissions);
+  const users = useSelector<IRootState>((s) => s.main.users);
   const [form] = Form.useForm();
   return (
     <Form
@@ -22,36 +22,36 @@ export default ({ modalData = {}, setModalData = () => {}, isCreating }: formPro
         if (isCreating) {
           //create api
           dispatch(
-            MainActions.createUser({ ...values, id: Math.random() }, () => {
+            MainActions.createRestaurant({ ...values, id: Math.random() }, () => {
               setModalData({});
               form.resetFields();
             }),
           );
         } else {
           //update api
-          dispatch(MainActions.updateUser({ ...values, id: modalData.id }));
+          dispatch(MainActions.updateRestaurant({ ...values, id: modalData.id }));
         }
       }}
-      className="userForm form"
+      className="restaurantForm form"
     >
-      <Form.Item name="full_name" label="Full name" rules={[{ required: isCreating }]}>
+      <Form.Item name="name" label="Restaurant name" rules={[{ required: isCreating }]}>
         <Input />
       </Form.Item>
-      <Form.Item name="username" label="Username" rules={[{ required: isCreating }]}>
+      <Form.Item name="location" label="Location Address" rules={[{ required: isCreating }]}>
         <Input />
       </Form.Item>
-      <Form.Item name="password" label="Password" rules={[{ required: isCreating }]}>
-        <Input />
-      </Form.Item>
-      <Form.Item name="role" label="Select role" rules={[{ required: isCreating }]}>
-        <Select>
-          {Object.keys(roles as []).map((o) => {
-            return (
-              <Select.Option key={o} value={o}>
-                {o}
-              </Select.Option>
-            );
-          })}
+
+      <Form.Item name="assigned_managers" label="Assign managers" rules={[{ required: isCreating }]}>
+        <Select mode="tags">
+          {(users as [])
+            .filter((user: userPropTypes) => user.role === "manager")
+            .map((user: userPropTypes) => {
+              return (
+                <Select.Option key={user.id} value={user.id}>
+                  {user.full_name}
+                </Select.Option>
+              );
+            })}
         </Select>
       </Form.Item>
       <Form.Item>

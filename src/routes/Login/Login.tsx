@@ -31,7 +31,6 @@ export default () => {
           onSubmit={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            console.log("form submited");
             dispatch(AuthActions.login(formData));
           }}
         >

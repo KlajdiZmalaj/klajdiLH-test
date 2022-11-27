@@ -3,10 +3,12 @@ import { useSelector } from "react-redux";
 import { Navbar, Table } from "../../components";
 import { restaurantPropTypes, userPropTypes } from "../../fakeData/data.types";
 import { IRootState } from "../../redux-store/store";
+import "./styles.scss";
 export interface columnPropTypes {
   title: string;
   dataIndex: string;
   key: string;
+  customCol?: boolean;
 }
 const usersColumns = [
   { title: "Name", dataIndex: "full_name", key: "full_name" },
@@ -16,7 +18,7 @@ const usersColumns = [
 
 const restaurantsColumns = [
   { title: "Name", dataIndex: "name", key: "name" },
-  { title: "Managers", dataIndex: "assigned_managers", key: "assigned_managers" },
+  { title: "Managers", dataIndex: "assigned_managers", key: "assigned_managers", customCol: true },
   { title: "Location", dataIndex: "location", key: "location" },
 ] as columnPropTypes[];
 

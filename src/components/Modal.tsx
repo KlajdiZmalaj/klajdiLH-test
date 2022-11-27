@@ -3,6 +3,7 @@ import { Modal } from "antd";
 import { columnPropTypes } from "../routes/Dashboard";
 import InputComponent from "./InputComponent";
 import UserForm from "./UserForm";
+import RestaurantForm from "./RestaurantForm";
 
 interface modalPopTypes {
   isModalOpen: boolean;
@@ -33,6 +34,9 @@ export default ({
       open={isModalOpen}
     >
       {type === "user" && <UserForm isCreating={isCreating} modalData={modalData} setModalData={setModalData} />}
+      {type === "restaurant" && (
+        <RestaurantForm isCreating={isCreating} modalData={modalData} setModalData={setModalData} />
+      )}
     </Modal>
   );
 };

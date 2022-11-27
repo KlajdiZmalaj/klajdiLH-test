@@ -24,3 +24,10 @@ export interface crudUserSagaProps {
   type: string;
   restore?: () => void;
 }
+
+export interface crudRestaurantSagaProps {
+  data?: any;
+  restaurant_id?: number;
+  type: string;
+  restore?: () => void;
+}

@@ -16,6 +16,9 @@ const { Types, Creators } = createActions({
   //restaurants
   getRestaurants: ["params"],
   setRestaurants: ["restaurants"],
+  updateRestaurant: ["data"],
+  deleteRestaurant: ["restaurant_id"],
+  createRestaurant: ["data", "restore"],
 
   //
   setLoading: ["loading"],

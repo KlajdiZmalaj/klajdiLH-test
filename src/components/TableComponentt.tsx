@@ -1,8 +1,10 @@
 import { Select, Tooltip } from "antd";
+import { spawn } from "child_process";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { menuPropTypes, restaurantPropTypes, userPropTypes } from "../fakeData/data.types";
 import { MainActions } from "../redux-store/models";
+import { IRootState } from "../redux-store/store";
 import { columnPropTypes } from "../routes/Dashboard";
 import Modal from "./Modal";
 
@@ -13,8 +15,9 @@ interface tableComponentPropTypes {
   columns: columnPropTypes[];
   filterKey?: string;
   type: string;
+  customCol?: boolean;
 }
-export default ({ title, columns, dataSource, filterKey, type }: tableComponentPropTypes) => {
+export default ({ title, columns, dataSource, filterKey, type, customCol }: tableComponentPropTypes) => {
   const [filterVal, setFilterVal] = useState("Filter by " + filterKey);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState({});
@@ -26,8 +29,6 @@ export default ({ title, columns, dataSource, filterKey, type }: tableComponentP
   const filteredDataSource = (dataSource as dataSourceType[]).filter((data) =>
     filterKey ? data?.[filterKey as keyof typeof data] === filterVal || filterVal.includes(filterKey) : true,
   ) as dataSourceType;
-
-  console.log("filteredDataSource", title, filterKey, filterVal, dataSource, filteredDataSource);
 
   return (
     <div className="tableComponent">
@@ -73,7 +74,13 @@ export default ({ title, columns, dataSource, filterKey, type }: tableComponentP
             return (
               <div key={data.id} className="table-row">
                 {columns.map((col) => (
-                  <span key={col.dataIndex}>{data?.[col?.dataIndex as keyof typeof data]}</span>
+                  <span key={col.dataIndex}>
+                    {col.customCol ? (
+                      <CustomCol type={type} col={col.dataIndex} value={data?.[col?.dataIndex as keyof typeof data]} />
+                    ) : (
+                      data?.[col?.dataIndex as keyof typeof data]
+                    )}
+                  </span>
                 ))}
                 <span className="actions">
                   <Tooltip title="Delete record">
@@ -84,7 +91,7 @@ export default ({ title, columns, dataSource, filterKey, type }: tableComponentP
                             dispatch(MainActions.deleteUser(data.id));
                             break;
                           case "restaurant":
-                            // dispatch(MainActions.deleteRestaurant(data.id))
+                            dispatch(MainActions.deleteRestaurant(data.id));
                             break;
 
                           case "menu":
@@ -132,6 +139,25 @@ export default ({ title, columns, dataSource, filterKey, type }: tableComponentP
           Add new <i className="fa fa-plus" aria-hidden="true"></i>
         </button>
       </div>
+    </div>
+  );
+};
+
+interface customColPropTypes {
+  type: string;
+  col: string;
+  value: any;
+}
+const CustomCol = ({ type, col, value }: customColPropTypes) => {
+  const users = useSelector<IRootState>((s) => s.main.users) as userPropTypes[];
+
+  return (
+    <div className="custumCol">
+      {type === "restaurant" &&
+        col === "assigned_managers" &&
+        (value || ([] as [])).map((userId: number) => (
+          <div className="managers">{users.find((u) => u.id === userId)?.full_name}</div>
+        ))}
     </div>
   );
 };

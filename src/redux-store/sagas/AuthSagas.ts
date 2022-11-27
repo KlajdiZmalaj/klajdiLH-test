@@ -6,7 +6,6 @@ import { userPropTypes } from "../../fakeData/data.types";
 //=============== AUTH SAGAS
 
 export function* login({ params }: login_register_SagaProps): Generator<any> {
-  console.log("saga login param log", params);
   const users = yield select((s) => s.main.users);
   const userFound = (users as []).find(
     (s: userPropTypes) => `${s.username}_${s.password}` === `${params.username}_${params.password}`,
@@ -24,7 +23,6 @@ export function* login({ params }: login_register_SagaProps): Generator<any> {
   }
 }
 export function* register({ params }: login_register_SagaProps): Generator<any> {
-  console.log("saga register param log", params);
   const users = yield select((s) => s.main.users);
   const isUserInStore = (users as []).some((u: userPropTypes) => u.username === params.username);
   if (isUserInStore) {

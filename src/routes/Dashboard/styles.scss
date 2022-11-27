@@ -1,1 +1,14 @@
 //
+.custumCol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .managers {
+    background-color: rgb(83, 155, 102);
+    color: #fff;
+    padding: 0 3px;
+    font-size: 13px;
+    text-transform: capitalize;
+    margin-right: 2px;
+  }
+}
