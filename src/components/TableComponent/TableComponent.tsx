@@ -93,6 +93,7 @@ export default ({ title, columns, dataSource = [], filterKey, type, isLoading }:
                       ) : (
                         data?.[col?.dataIndex as keyof typeof data]
                       )}
+                      {col?.addonAfter}
                     </span>
                   ))}
                   <span className="actions">
@@ -114,7 +115,7 @@ export default ({ title, columns, dataSource = [], filterKey, type, isLoading }:
                               dispatch(MainActions.deleteRestaurantServices({ deleteOn: "foodItems", id: data.id }));
                               break;
                             case "order":
-                              // dispatch(MainActions.deleteOrder(data.id))
+                              dispatch(MainActions.deleteOrder(data.id));
                               break;
                             default:
                               break;

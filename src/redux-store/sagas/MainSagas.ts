@@ -18,6 +18,7 @@ import {
 import {
   foodItemPropTypes,
   menuPropTypes,
+  orderPropTypes,
   restaurantPropTypes,
   restaurantServicesPropTypes,
   userPropTypes,
@@ -55,7 +56,9 @@ export function* getPermissions({ params }: getPermissionsSagaProps): Generator<
 export function* getUsers({ params }: getUsersSagaProps): Generator<any> {
   //ffake 2 seconds delay as api response, than loading is set to false again after users are set
   yield put(MainActions.setLoading(true));
-  yield delay(2000);
+
+  window.location.hash === "#/dashboard" ? yield delay(2000) : yield;
+
   if (true) {
     const storedUsers = localStorage.getItem("storedUsers");
     //set fake array of users to redux store after fake request done firs time  or get them from lcoalstorage old ones
@@ -211,6 +214,28 @@ export function* getOrders({ params }: crudOrderSagaProps): Generator<any> {
 //--create
 export function* createOrder({ data, restore = () => {} }: crudOrderSagaProps): Generator<any> {}
 //--update
-export function* updateOrder({ data }: crudOrderSagaProps): Generator<any> {}
+export function* updateOrder({ data }: crudOrderSagaProps): Generator<any, void, orderPropTypes[]> {
+  //debounce effect half sec on fast status change
+  yield delay(500);
+  const orders = yield select((s) => s.main.orders);
+  yield put(
+    MainActions.setOrders(
+      orders.map((order) => {
+        return order.id === data?.id ? { ...order, ...data } : order;
+      }),
+    ),
+  );
+  successMsg("Order updated sucefully");
+}
 //--delete
-export function* deleteOrder({ user_id }: crudOrderSagaProps): Generator<any> {}
+export function* deleteOrder({ id }: crudOrderSagaProps): Generator<any, void, orderPropTypes[]> {
+  const orders = yield select((s) => s.main.orders);
+  yield put(
+    MainActions.setOrders(
+      orders.filter((order) => {
+        return order.id !== id;
+      }),
+    ),
+  );
+  successMsg("Order deleted sucefully");
+}

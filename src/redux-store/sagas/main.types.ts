@@ -34,8 +34,8 @@ export interface crudUserSagaProps {
 }
 export interface crudOrderSagaProps {
   params: commonParamsType;
-  data?: object;
-  user_id?: number;
+  data?: { id: number };
+  id?: number;
   type: string;
   restore?: () => void;
 }

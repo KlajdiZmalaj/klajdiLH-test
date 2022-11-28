@@ -3,6 +3,7 @@ export interface columnPropTypes {
   dataIndex: string;
   key: string;
   customCol?: boolean;
+  addonAfter?: any;
 }
 export const usersColumns = [
   { title: "Name", dataIndex: "full_name", key: "full_name" },
@@ -24,7 +25,7 @@ export const menusColumns = [
 
 export const menuItemColumns = [
   { title: "Name", dataIndex: "name", key: "name" },
-  { title: "Price", dataIndex: "price", key: "price" },
+  { title: "Price", dataIndex: "price", key: "price", addonAfter: "$" },
   { title: "Image", dataIndex: "image", key: "image", customCol: true },
   { title: "Description", dataIndex: "description", key: "description" },
 ] as columnPropTypes[];

@@ -31,7 +31,7 @@ const { Types, Creators } = createActions({
   getOrders: ["params"],
   setOrders: ["orders"],
   updateOrder: ["data"],
-  deleteOrder: ["user_id"],
+  deleteOrder: ["id"],
   createOrder: ["data", "restore"],
 
   setLoading: ["loading"],

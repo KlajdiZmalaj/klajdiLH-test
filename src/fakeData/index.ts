@@ -52,7 +52,7 @@ export const restaurantServices = {
     {
       id: 1,
       name: "Boiled Eggs",
-      price: "1$",
+      price: 1,
       image: "",
       description: "loasdas dasdasdas asddasdas",
     },
@@ -60,14 +60,14 @@ export const restaurantServices = {
     {
       id: 2,
       name: "Salad",
-      price: "2$",
+      price: 2,
       image: "",
       description: "loasdas dasdasdas asddasdas",
     },
     {
       id: 3,
       name: "Italian Pasta",
-      price: "5$",
+      price: 5,
       image:
         "https://thumbs.dreamstime.com/b/gourmet-tasty-italian-penne-pasta-plate-close-up-spicy-tomato-herbs-white-served-top-wooden-table-58667798.jpg",
       description: "loasdas dasdasdas asddasdas",

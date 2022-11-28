@@ -4,6 +4,7 @@ import UserForm from "./Forms/UserForm";
 import RestaurantForm from "./Forms/RestaurantForm";
 import MenuForm from "./Forms/MenuForm";
 import MenuItemForm from "./Forms/MenuItemForm";
+import OrderForm from "./Forms/OrderForm";
 
 interface modalPopTypes {
   isModalOpen: boolean;
@@ -29,6 +30,7 @@ export default ({ modalData, isModalOpen, setModalData, title, type, setIsModalO
       {type === "restaurant" && <RestaurantForm isCreating={isCreating} modalData={modalData} setModalData={setModalData} />}
       {type === "menu" && <MenuForm isCreating={isCreating} modalData={modalData} setModalData={setModalData} />}
       {type === "menu_item" && <MenuItemForm isCreating={isCreating} modalData={modalData} setModalData={setModalData} />}
+      {type === "order" && <OrderForm isCreating={isCreating} modalData={modalData} setModalData={setModalData} />}
     </Modal>
   );
 };

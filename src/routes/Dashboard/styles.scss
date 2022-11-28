@@ -72,3 +72,38 @@
   object-position: center;
   background-color: #fff1f1;
 }
+.orderStatus {
+  position: relative;
+  div {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 10px;
+    background-color: #32a100;
+    color: #fff;
+    white-space: nowrap;
+    padding: 0 6px;
+    transform: translateX(106%) translateY(-16%);
+    pointer-events: none;
+  }
+}
+.acceptOder {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-flow: column;
+  .buttons {
+    display: flex;
+    button {
+      margin: 10px;
+    }
+  }
+}
+.totalOrder {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  font-size: 16px;
+  font-weight: 600;
+}

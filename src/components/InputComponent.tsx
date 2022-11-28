@@ -9,7 +9,7 @@ interface propTypes {
   formData?: any;
   type?: string;
   style?: object;
-  options?: string[];
+  options?: any[];
 }
 
 const InputComponent = ({ name, label, setData = () => {}, formData = {}, type, style, options = [], ...rest }: propTypes) => {
@@ -26,8 +26,8 @@ const InputComponent = ({ name, label, setData = () => {}, formData = {}, type, 
         >
           {options.map((o) => {
             return (
-              <Select.Option key={o} value={o}>
-                {o}
+              <Select.Option key={o.id} value={o.id}>
+                {o.name}
               </Select.Option>
             );
           })}
