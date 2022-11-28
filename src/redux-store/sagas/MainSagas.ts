@@ -1,20 +1,29 @@
-import { put, call, delay, select } from "redux-saga/effects";
+import { put, call, delay, select, SelectEffect, PutEffect, CallEffect } from "redux-saga/effects";
 import { notification } from "antd";
 import MainActions from "../models/main";
 import * as MainReq from "../../services/main";
-import { permissions, restaurants, restaurantServices, users } from "../../fakeData";
+import { orders, permissions, restaurants, restaurantServices, users } from "../../fakeData";
 import {
+  createRestaurantServicesSagaProps,
+  crudOrderSagaProps,
   crudRestaurantSagaProps,
-  crudRestaurantServicesSagaProps,
   crudUserSagaProps,
+  deleteRestaurantServicesSagaProps,
   getPermissionsSagaProps,
   getRestaurantServicesSagaProps,
   getRestaurantsSagaProps,
   getUsersSagaProps,
+  updateRestaurantServicesSagaProps,
 } from "./main.types";
-import { foodItemPropTypes, menuPropTypes, restaurantPropTypes, userPropTypes } from "../../fakeData/data.types";
+import {
+  foodItemPropTypes,
+  menuPropTypes,
+  restaurantPropTypes,
+  restaurantServicesPropTypes,
+  userPropTypes,
+} from "../../fakeData/data.types";
 
-function* updateLocalStorage(): Generator<any> {
+function* updateLocalStorage(): Generator<SelectEffect> {
   const storedUsers = yield select((s) => s.main.users);
   const storedRestaurants = yield select((s) => s.main.restaurants);
   const storedRestaurantServices = yield select((s) => s.main.restaurantServices);
@@ -70,9 +79,7 @@ export function* updateUser({ data }: crudUserSagaProps): Generator<any> {
   if (true) {
     const currentUsers = yield select((s) => s.main.users) || [];
 
-    yield put(
-      MainActions.setUsers((currentUsers as []).map((user: userPropTypes) => (user.id === data.id ? data : user))),
-    );
+    yield put(MainActions.setUsers((currentUsers as []).map((user: userPropTypes) => (user.id === data.id ? data : user))));
     yield call(updateLocalStorage);
     successMsg("User updated");
   }
@@ -96,7 +103,7 @@ export function* getRestaurants({ params }: getRestaurantsSagaProps): Generator<
     yield put(MainActions.setRestaurants(storedRestaurants ? JSON.parse(storedRestaurants) : restaurants));
   }
 }
-
+//--create
 export function* createRestaurant({ data, restore = () => {} }: crudRestaurantSagaProps): Generator<any> {
   if (true) {
     const currentRestaurants = yield select((s) => s.main.restaurants) || [];
@@ -107,26 +114,23 @@ export function* createRestaurant({ data, restore = () => {} }: crudRestaurantSa
     successMsg("Restaurant deleted");
   }
 }
-
+//--update
 export function* updateRestaurant({ data }: crudRestaurantSagaProps): Generator<any> {
   if (true) {
     const currentRestaurants = yield select((s) => s.main.restaurants) || [];
 
     yield put(
-      MainActions.setRestaurants(
-        (currentRestaurants as []).map((r: restaurantPropTypes) => (r.id === data.id ? data : r)),
-      ),
+      MainActions.setRestaurants((currentRestaurants as []).map((r: restaurantPropTypes) => (r.id === data.id ? data : r))),
     );
     yield call(updateLocalStorage);
     successMsg("Restaurant updated");
   }
 }
+//--delete
 export function* deleteRestaurant({ restaurant_id }: crudRestaurantSagaProps): Generator<any> {
   if (true) {
     const currentRestaurants = yield select((s) => s.main.restaurants) || [];
-    yield put(
-      MainActions.setUsers((currentRestaurants as []).filter((r: restaurantPropTypes) => r.id !== restaurant_id)),
-    );
+    yield put(MainActions.setUsers((currentRestaurants as []).filter((r: restaurantPropTypes) => r.id !== restaurant_id)));
     yield call(updateLocalStorage);
     successMsg("Restaurant deleted");
   }
@@ -138,58 +142,75 @@ export function* getRestaurantServices({ params }: getRestaurantServicesSagaProp
   if (true) {
     const storedRestaurantServices = localStorage.getItem("storedRestaurantServices");
     yield put(
-      MainActions.setRestaurantServices(
-        storedRestaurantServices ? JSON.parse(storedRestaurantServices) : restaurantServices,
-      ),
+      MainActions.setRestaurantServices(storedRestaurantServices ? JSON.parse(storedRestaurantServices) : restaurantServices),
     );
   }
 }
-export function* createRestaurantServices({ data }: crudRestaurantServicesSagaProps): Generator<any> {
+//--create
+export function* createRestaurantServices({
+  data,
+}: createRestaurantServicesSagaProps): Generator<any, void, restaurantServicesPropTypes> {
   if (true) {
     const currentRestaurantServices = yield select((s) => s.main.restaurantServices) || {};
     //1saga for multiple sections => section refers to menu|foodItems (in futere might have others)
-    const currentSection = (currentRestaurantServices as {})[data.createOn as keyof typeof currentRestaurantServices];
+    const currentSection = currentRestaurantServices[data.createOn];
     yield put(
       MainActions.setRestaurantServices({
         ...(currentRestaurantServices as {}),
-        [data.createOn]: [...currentSection, data],
+        [data?.createOn]: [...currentSection, data],
       }),
     );
     yield call(updateLocalStorage);
-    successMsg(data.createOn + " created sucefully");
+    successMsg(data?.createOn + " created sucefully");
   }
 }
-
-export function* updateRestaurantServices({ data }: crudRestaurantServicesSagaProps): Generator<any> {
+//--update
+export function* updateRestaurantServices({
+  data,
+}: updateRestaurantServicesSagaProps): Generator<any, void, restaurantServicesPropTypes> {
   if (true) {
     const currentRestaurantServices = yield select((s) => s.main.restaurantServices) || [];
-    const currentSection = (currentRestaurantServices as {})[data.updateOn as keyof typeof currentRestaurantServices];
+    const currentSection = currentRestaurantServices[data.updateOn];
     yield put(
       MainActions.setRestaurantServices({
         ...(currentRestaurantServices as {}),
-        [data.updateOn]: (currentSection as foodItemPropTypes[] | menuPropTypes[]).map((r) =>
-          r.id === data.id ? data : r,
-        ),
+        [data.updateOn]: (currentSection as foodItemPropTypes[] | menuPropTypes[]).map((r) => (r.id === data.id ? data : r)),
       }),
     );
     yield call(updateLocalStorage);
     successMsg(data.updateOn + " updated sucefully");
   }
 }
-
-export function* deleteRestaurantServices({ data }: crudRestaurantServicesSagaProps): Generator<any> {
+//--delete (fully typed)
+export function* deleteRestaurantServices({
+  data,
+}: deleteRestaurantServicesSagaProps): Generator<SelectEffect | PutEffect | CallEffect, void, restaurantServicesPropTypes> {
   if (true) {
-    const currentRestaurantServices = yield select((s) => s.main.restaurantServices) || [];
-    const currentSection = (currentRestaurantServices as {})[data.deleteOn as keyof typeof currentRestaurantServices];
+    const currentRestaurantServices = yield select((s) => s.main.restaurantServices);
+    const currentSection = currentRestaurantServices[data.deleteOn] || [];
     console.log("deleteRestaurantServices called", data, currentSection);
 
     yield put(
       MainActions.setRestaurantServices({
-        ...(currentRestaurantServices as {}),
-        [data.deleteOn]: (currentSection as {}[]).filter((r: any) => r.id !== data.id),
+        ...currentRestaurantServices,
+        [data.deleteOn]: (currentSection as []).filter((r: any) => r.id !== data.id),
       }),
     );
     yield call(updateLocalStorage);
     successMsg(data.deleteOn + " updated sucefully");
   }
 }
+
+//=============== orders SERVICES SAGAS
+//--get
+export function* getOrders({ params }: crudOrderSagaProps): Generator<any> {
+  if (true) {
+    yield put(MainActions.setOrders(orders));
+  }
+}
+//--create
+export function* createOrder({ data, restore = () => {} }: crudOrderSagaProps): Generator<any> {}
+//--update
+export function* updateOrder({ data }: crudOrderSagaProps): Generator<any> {}
+//--delete
+export function* deleteOrder({ user_id }: crudOrderSagaProps): Generator<any> {}

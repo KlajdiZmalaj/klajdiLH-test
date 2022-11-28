@@ -1,3 +1,8 @@
+type commonParamsType = {
+  id: number;
+  from?: Date;
+  to?: Date;
+};
 export interface getPermissionsParamsProps {
   role?: string;
   id?: number | string;
@@ -7,19 +12,18 @@ export interface getPermissionsSagaProps {
   params: getPermissionsParamsProps;
   type: string;
 }
-
 //
 export interface getRestaurantsSagaProps {
-  params: any;
+  params: commonParamsType;
   type: string;
 }
 export interface getRestaurantServicesSagaProps {
-  params: any;
+  params: commonParamsType;
   type: string;
 }
 //
 export interface getUsersSagaProps {
-  params: any;
+  params: commonParamsType;
   type: string;
 }
 export interface crudUserSagaProps {
@@ -28,16 +32,39 @@ export interface crudUserSagaProps {
   type: string;
   restore?: () => void;
 }
-
+export interface crudOrderSagaProps {
+  params: commonParamsType;
+  data?: object;
+  user_id?: number;
+  type: string;
+  restore?: () => void;
+}
 export interface crudRestaurantSagaProps {
   data?: any;
   restaurant_id?: number;
   type: string;
   restore?: () => void;
 }
-export interface crudRestaurantServicesSagaProps {
-  data?: any;
+type onType = "menus" | "foodItems";
+export interface updateRestaurantServicesSagaProps {
+  data: {
+    updateOn: onType;
+    id: number;
+  };
   type: string;
-  id?: number;
-  restore?: () => void;
+}
+export interface createRestaurantServicesSagaProps {
+  data: {
+    createOn: onType;
+    id: number;
+  };
+  type: string;
+}
+
+export interface deleteRestaurantServicesSagaProps {
+  data: {
+    deleteOn: onType;
+    id: number;
+  };
+  type: string;
 }

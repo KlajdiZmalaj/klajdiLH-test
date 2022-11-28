@@ -8,7 +8,7 @@ import { AuthActions } from "../redux-store/models";
 export default () => {
   const dispatch = useDispatch();
   //
-  const loggedUser = useSelector<IRootState>((s) => s.auth.loggedUser) as userPropTypes;
+  const loggedUser = useSelector<IRootState, userPropTypes>((s) => s.auth.loggedUser);
   //
   return (
     <header>

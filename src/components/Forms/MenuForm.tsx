@@ -12,7 +12,7 @@ export interface formPropTypes {
 }
 export default ({ modalData = {}, setModalData = () => {}, isCreating }: formPropTypes) => {
   const dispatch = useDispatch();
-  const restaurantServices = useSelector<IRootState>((s) => s.main.restaurantServices) as restaurantServicesPropTypes;
+  const restaurantServices = useSelector<IRootState, restaurantServicesPropTypes>((s) => s.main.restaurantServices);
   const [form] = Form.useForm();
   return (
     <Form

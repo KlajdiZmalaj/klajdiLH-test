@@ -12,16 +12,7 @@ interface propTypes {
   options?: string[];
 }
 
-const InputComponent = ({
-  name,
-  label,
-  setData = () => {},
-  formData = {},
-  type,
-  style,
-  options = [],
-  ...rest
-}: propTypes) => {
+const InputComponent = ({ name, label, setData = () => {}, formData = {}, type, style, options = [], ...rest }: propTypes) => {
   return (
     <div className="inputComponent" style={style}>
       <div className="label">{label}</div>

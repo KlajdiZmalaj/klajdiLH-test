@@ -28,3 +28,11 @@ export const menuItemColumns = [
   { title: "Image", dataIndex: "image", key: "image", customCol: true },
   { title: "Description", dataIndex: "description", key: "description" },
 ] as columnPropTypes[];
+
+export const ordersColumns = [
+  { title: "ID", dataIndex: "id", key: "id" },
+  { title: "Status", dataIndex: "status", key: "status", customCol: true },
+  { title: "Date", dataIndex: "date", key: "date" },
+  { title: "Ordered by", dataIndex: "ordered_by", key: "ordered_by", customCol: true },
+  { title: "Ordered in", dataIndex: "ordered_in", key: "ordered_in", customCol: true },
+] as columnPropTypes[];

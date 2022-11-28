@@ -11,13 +11,14 @@ const Root: FC = () => {
   //
   const dispatch = useDispatch();
   //
-  const loggedUser = useSelector<IRootState>((s) => s.auth.loggedUser) as userPropTypes;
+  const loggedUser = useSelector<IRootState, userPropTypes>((s) => s.auth.loggedUser);
   //
   useEffect(() => {
     dispatch(MainActions.getPermissions({ role: "test" }));
     dispatch(MainActions.getRestaurants());
     dispatch(MainActions.getUsers());
     dispatch(MainActions.getRestaurantServices());
+    dispatch(MainActions.getOrders());
   }, []);
   console.log("loggedUser", loggedUser);
 

@@ -14,15 +14,7 @@ interface modalPopTypes {
   modalData: object;
   isCreating?: boolean;
 }
-export default ({
-  modalData,
-  isModalOpen,
-  setModalData,
-  title,
-  type,
-  setIsModalOpen,
-  isCreating = true,
-}: modalPopTypes) => {
+export default ({ modalData, isModalOpen, setModalData, title, type, setIsModalOpen, isCreating = true }: modalPopTypes) => {
   return (
     <Modal
       destroyOnClose={true}
@@ -34,13 +26,9 @@ export default ({
       open={isModalOpen}
     >
       {type === "user" && <UserForm isCreating={isCreating} modalData={modalData} setModalData={setModalData} />}
-      {type === "restaurant" && (
-        <RestaurantForm isCreating={isCreating} modalData={modalData} setModalData={setModalData} />
-      )}
+      {type === "restaurant" && <RestaurantForm isCreating={isCreating} modalData={modalData} setModalData={setModalData} />}
       {type === "menu" && <MenuForm isCreating={isCreating} modalData={modalData} setModalData={setModalData} />}
-      {type === "menu_item" && (
-        <MenuItemForm isCreating={isCreating} modalData={modalData} setModalData={setModalData} />
-      )}
+      {type === "menu_item" && <MenuItemForm isCreating={isCreating} modalData={modalData} setModalData={setModalData} />}
     </Modal>
   );
 };

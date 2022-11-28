@@ -30,3 +30,11 @@ export interface restaurantServicesPropTypes {
   menus: menuPropTypes[];
   foodItems: foodItemPropTypes[];
 }
+export interface orderPropTypes {
+  id: number;
+  status: number;
+  date: string;
+  items: number[];
+  ordered_by: number;
+  ordered_in: number;
+}

@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { restaurantServicesPropTypes, userPropTypes } from "../../fakeData/data.types";
+import { orderPropTypes, restaurantServicesPropTypes, userPropTypes } from "../../fakeData/data.types";
 import { IRootState } from "../../redux-store/store";
 import { Tooltip } from "antd";
 
@@ -11,9 +11,9 @@ interface customColPropTypes {
 }
 //this comp renders everything based on value not just the value of the object :)
 const CustomCol = ({ type, col, value }: customColPropTypes) => {
-  const users = useSelector<IRootState>((s) => s.main.users) as userPropTypes[];
-  const restaurantServices =
-    (useSelector<IRootState>((s) => s.main.restaurantServices) as restaurantServicesPropTypes) || {};
+  const users = useSelector<IRootState, userPropTypes[]>((s) => s.main.users);
+  const restaurantServices = useSelector<IRootState, restaurantServicesPropTypes>((s) => s.main.restaurantServices);
+  const orders = useSelector<IRootState, orderPropTypes[]>((s) => s.main.users);
   return (
     <div className="custumCol">
       {/*ASSigned MANGERS on restauran cell */}
@@ -45,6 +45,12 @@ const CustomCol = ({ type, col, value }: customColPropTypes) => {
       )}
       {/* Food item image cell */}
       {type === "menu_item" && col === "image" && (
+        <div className="image">
+          <img src={value || "https://via.placeholder.com/30"} alt="" />
+        </div>
+      )}
+      {/* Order status */}
+      {type === "order" && col === "status" && (
         <div className="image">
           <img src={value || "https://via.placeholder.com/30"} alt="" />
         </div>

@@ -27,7 +27,13 @@ const { Types, Creators } = createActions({
   deleteRestaurantServices: ["data"],
   createRestaurantServices: ["data", "restore"],
 
-  //
+  //orders
+  getOrders: ["params"],
+  setOrders: ["orders"],
+  updateOrder: ["data"],
+  deleteOrder: ["user_id"],
+  createOrder: ["data", "restore"],
+
   setLoading: ["loading"],
 });
 
@@ -36,15 +42,23 @@ export default Creators;
 
 const INITIAL_STATE = {
   loading: false,
+  orders: [],
   permissions: {},
-  restaurantServices: {},
-  restaurants: [],
   users: [],
+  restaurants: [],
+  restaurantServices: {
+    menus: [],
+    foodItems: [],
+  },
 };
 export const reducer = createReducer(INITIAL_STATE, {
   SET_LOADING: (state, { loading }) => ({ ...state, loading }),
   SET_PERMISSIONS: (state, { permissions }) => ({ ...state, permissions }),
-  SET_RESTAURANT_SERVICES: (state, { restaurantServices }) => ({ ...state, restaurantServices }),
+  SET_RESTAURANT_SERVICES: (state, { restaurantServices }) => ({
+    ...state,
+    restaurantServices,
+  }),
   SET_RESTAURANTS: (state, { restaurants }) => ({ ...state, restaurants }),
+  SET_ORDERS: (state, { orders }) => ({ ...state, orders }),
   SET_USERS: (state, { users }) => ({ ...state, users, loading: false }),
 });

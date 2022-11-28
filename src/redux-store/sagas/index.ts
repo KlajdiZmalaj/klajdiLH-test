@@ -23,6 +23,11 @@ export default function* rootSaga() {
     ...[takeLatest("DELETE_RESTAURANT_SERVICES", MainGenerators.deleteRestaurantServices)],
     ...[takeLatest("CREATE_RESTAURANT_SERVICES", MainGenerators.createRestaurantServices)],
 
+    ...[takeLatest("GET_ORDERS", MainGenerators.getOrders)],
+    ...[takeLatest("CREATE_ORDER", MainGenerators.createOrder)],
+    ...[takeLatest("DELETE_ORDER", MainGenerators.deleteOrder)],
+    ...[takeLatest("UPDATE_ORDER", MainGenerators.updateOrder)],
+
     //AUTH
     ...[takeLatest("LOGIN", AuthGenerators.login)],
     ...[takeLatest("REGISTER", AuthGenerators.register)],

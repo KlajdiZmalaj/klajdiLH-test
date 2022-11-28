@@ -74,3 +74,23 @@ export const restaurantServices = {
     },
   ],
 };
+
+export const orders = [
+  {
+    id: 1,
+    status: 1,
+    date: "04-11-2022 13:45:12",
+    items: [1, 2],
+    ordered_by: 3,
+    ordered_in: 1,
+  },
+];
+
+export const orderStatuses = {
+  1: "Created",
+  2: "Approved",
+  3: "Prepared",
+  4: "Waiting for delivery",
+  5: "Delivered",
+  6: "Rejected",
+};

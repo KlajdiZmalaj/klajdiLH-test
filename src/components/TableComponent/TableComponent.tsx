@@ -1,13 +1,13 @@
 import { Select, Skeleton, Tooltip } from "antd";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { menuPropTypes, restaurantPropTypes, userPropTypes } from "../../fakeData/data.types";
+import { menuPropTypes, orderPropTypes, restaurantPropTypes, userPropTypes } from "../../fakeData/data.types";
 import { MainActions } from "../../redux-store/models";
 import { columnPropTypes } from "../../routes/Dashboard/tableCols";
 import Modal from "../Modal";
 import TableCustomCell from "./TableCustomCell";
 
-export type dataSourceType = userPropTypes[] | restaurantPropTypes[] | menuPropTypes[];
+export type dataSourceType = userPropTypes[] | restaurantPropTypes[] | menuPropTypes[] | orderPropTypes[];
 
 interface tableComponentPropTypes {
   title: string;
@@ -18,7 +18,7 @@ interface tableComponentPropTypes {
   isLoading?: boolean;
 }
 
-export default ({ title, columns, dataSource, filterKey, type, isLoading }: tableComponentPropTypes) => {
+export default ({ title, columns, dataSource = [], filterKey, type, isLoading }: tableComponentPropTypes) => {
   const [filterVal, setFilterVal] = useState("Filter by " + filterKey);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState({});
@@ -30,6 +30,7 @@ export default ({ title, columns, dataSource, filterKey, type, isLoading }: tabl
   const filteredDataSource = (dataSource as dataSourceType[]).filter((data) =>
     filterKey ? data?.[filterKey as keyof typeof data] === filterVal || filterVal.includes(filterKey) : true,
   ) as dataSourceType;
+  console.log("dataSource", dataSource);
 
   return (
     <div className="tableComponent">
@@ -52,15 +53,13 @@ export default ({ title, columns, dataSource, filterKey, type, isLoading }: tabl
             value={filterVal}
           >
             <Select.Option value={filterKey}>All</Select.Option>
-            {Object.keys((dataSource as []).reduce((a, b: any) => ({ ...a, [b[filterKey]]: a }), {}) as []).map(
-              (data) => {
-                return (
-                  <Select.Option key={data} value={data}>
-                    {data}
-                  </Select.Option>
-                );
-              },
-            )}
+            {Object.keys((dataSource as []).reduce((a, b: any) => ({ ...a, [b[filterKey]]: a }), {}) as []).map((data) => {
+              return (
+                <Select.Option key={data} value={data}>
+                  {data}
+                </Select.Option>
+              );
+            })}
           </Select>
         )}
       </h4>
@@ -90,11 +89,7 @@ export default ({ title, columns, dataSource, filterKey, type, isLoading }: tabl
                   {columns.map((col) => (
                     <span key={col.dataIndex}>
                       {col.customCol ? (
-                        <TableCustomCell
-                          type={type}
-                          col={col.dataIndex}
-                          value={data?.[col?.dataIndex as keyof typeof data]}
-                        />
+                        <TableCustomCell type={type} col={col.dataIndex} value={data?.[col?.dataIndex as keyof typeof data]} />
                       ) : (
                         data?.[col?.dataIndex as keyof typeof data]
                       )}
