@@ -1,34 +1,31 @@
+import { Spin } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Navbar, Table } from "../../components";
-import { restaurantPropTypes, userPropTypes } from "../../fakeData/data.types";
+import { restaurantPropTypes, restaurantServicesPropTypes, userPropTypes } from "../../fakeData/data.types";
 import { IRootState } from "../../redux-store/store";
 import "./styles.scss";
-export interface columnPropTypes {
-  title: string;
-  dataIndex: string;
-  key: string;
-  customCol?: boolean;
-}
-const usersColumns = [
-  { title: "Name", dataIndex: "full_name", key: "full_name" },
-  { title: "Username", dataIndex: "username", key: "username" },
-  { title: "Role", dataIndex: "role", key: "username" },
-] as columnPropTypes[];
-
-const restaurantsColumns = [
-  { title: "Name", dataIndex: "name", key: "name" },
-  { title: "Managers", dataIndex: "assigned_managers", key: "assigned_managers", customCol: true },
-  { title: "Location", dataIndex: "location", key: "location" },
-] as columnPropTypes[];
+import { menuItemColumns, menusColumns, restaurantsColumns, usersColumns } from "./tableCols";
 
 export default () => {
   const users = useSelector<IRootState>((s) => s.main.users) as userPropTypes[];
   const restaurants = useSelector<IRootState>((s) => s.main.restaurants) as restaurantPropTypes[];
+  const restaurantServices =
+    (useSelector<IRootState>((s) => s.main.restaurantServices) as restaurantServicesPropTypes) || {};
+
+  const isLoading = useSelector<IRootState>((s) => s.main.loading) as boolean;
+  console.log("restaurantServices", restaurantServices);
+
   return (
     <div className="page">
+      {isLoading && (
+        <div className="loading">
+          <Spin /> Loading...
+        </div>
+      )}
       <Navbar />
       <Table
+        isLoading={isLoading}
         type="user"
         filterKey="role"
         title="Users"
@@ -36,8 +33,13 @@ export default () => {
         columns={usersColumns}
       />
       <Table type="restaurant" title="Restaurants" dataSource={restaurants} columns={restaurantsColumns} />
-      <Table type="menu" title="Menus" dataSource={[]} columns={[]} />
-      <Table type="menu_menu" title="Menu Items" dataSource={[]} columns={[]} />
+      <Table type="menu" title="Menus" dataSource={restaurantServices.menus || []} columns={menusColumns} />
+      <Table
+        type="menu_item"
+        title="Menu Items"
+        dataSource={restaurantServices.foodItems || []}
+        columns={menuItemColumns}
+      />
       <Table type="order" title="Orders" dataSource={[]} columns={[]} />
     </div>
   );

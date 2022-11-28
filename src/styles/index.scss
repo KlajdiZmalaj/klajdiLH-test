@@ -6,9 +6,39 @@
 * {
   box-sizing: border-box;
 }
+html:root {
+  --antd-wave-shadow-color: #1c2c59;
+}
 body {
   background-color: #fff !important;
   font-family: "Lato", sans-serif;
+  .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    border-color: #1c2c59;
+    box-shadow: 0 0 0 2px rgba(4, 33, 59, 0.2);
+  }
+  .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+    border-color: #1c2c59;
+  }
+  .ant-input,
+  .ant-select,
+  .ant-select-selector {
+    &-number {
+      &:hover,
+      &:focus,
+      &-focused {
+        border-color: #1c2c59;
+        border-right-width: 1px;
+        box-shadow: none;
+      }
+    }
+    &:hover,
+    &:focus,
+    &-focused {
+      border-color: #1c2c59;
+      border-right-width: 1px;
+      box-shadow: none;
+    }
+  }
 }
 .page {
   width: 100%;
@@ -97,6 +127,7 @@ header {
   border: 1px solid #00000017;
   margin-top: 30px;
   box-shadow: 0 2px 11px -6px #000;
+  transition: 0.3s;
   .table {
     display: flex;
     flex-flow: column;
@@ -107,12 +138,30 @@ header {
       display: flex;
       align-items: center;
       font-size: 14px;
+
       span {
         width: 100%;
         padding: 0 16px;
         height: 30px;
-        display: flex;
         align-items: center;
+        display: flex;
+        img {
+          width: 30px;
+          height: 30px;
+          object-fit: contain;
+          cursor: pointer;
+          transition: 0.3s;
+          &:hover {
+            transform: scale(5);
+          }
+        }
+        &.url {
+          display: block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
         &.actions {
           width: 100px;
           flex-shrink: 0;
@@ -181,16 +230,36 @@ header {
     }
   }
 }
-.form {
-  .inputComponent {
-    .ant-input,
-    .ant-select {
-      width: 100%;
-    }
+.ant-form {
+  .ant-input,
+  .ant-select,
+  .ant-input-number-group-wrapper {
+    width: 100%;
   }
   button {
     @include buttonMix;
     margin: auto;
     margin-top: 60px;
+  }
+}
+.ant-select-selection-item {
+  img {
+    display: none;
+  }
+}
+.ant-select-item-option-content {
+  display: flex;
+  align-items: center;
+  overflow: visible;
+  img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    transform-origin: center;
+    transition: 0.3s;
+    margin-left: 30px;
+    &:hover {
+      transform: scale(4);
+    }
   }
 }

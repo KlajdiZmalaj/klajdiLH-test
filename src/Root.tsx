@@ -17,6 +17,7 @@ const Root: FC = () => {
     dispatch(MainActions.getPermissions({ role: "test" }));
     dispatch(MainActions.getRestaurants());
     dispatch(MainActions.getUsers());
+    dispatch(MainActions.getRestaurantServices());
   }, []);
   console.log("loggedUser", loggedUser);
 

@@ -3,6 +3,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  .time {
+    display: flex;
+    align-items: center;
+    div {
+      width: 8px;
+      height: 8px;
+      flex-shrink: 0;
+      border-radius: 100%;
+      background-color: red;
+      margin-left: 10px;
+      &.active {
+        background-color: green;
+      }
+    }
+  }
   .managers {
     background-color: rgb(83, 155, 102);
     color: #fff;
@@ -11,4 +26,49 @@
     text-transform: capitalize;
     margin-right: 2px;
   }
+  .foods {
+    background-color: rgb(194, 90, 58);
+    color: #fff;
+    padding: 0 3px;
+    font-size: 13px;
+    text-transform: capitalize;
+    margin-right: 2px;
+    border-radius: 4px;
+  }
+}
+.loading {
+  position: fixed;
+  top: 11px;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 9999;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  .ant-spin-dot-spin {
+    margin-right: 10px;
+  }
+  .ant-spin-dot-item {
+    background-color: rgb(255, 242, 58);
+  }
+}
+.ant-skeleton {
+  display: table;
+  width: 100%;
+  margin-top: 30px;
+  padding: 20px;
+}
+.table {
+  * {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+  }
+}
+.foodImg {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  object-position: center;
+  background-color: #fff1f1;
 }

@@ -1,9 +1,9 @@
 import { Form, Input, Select } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { userPropTypes } from "../fakeData/data.types";
-import { MainActions } from "../redux-store/models";
-import { IRootState } from "../redux-store/store";
+import { userPropTypes } from "../../fakeData/data.types";
+import { MainActions } from "../../redux-store/models";
+import { IRootState } from "../../redux-store/store";
 export interface formPropTypes {
   modalData?: userPropTypes;
   setModalData?: Function;
@@ -41,7 +41,7 @@ export default ({ modalData = {}, setModalData = () => {}, isCreating }: formPro
         <Input />
       </Form.Item>
       <Form.Item name="password" label="Password" rules={[{ required: isCreating }]}>
-        <Input />
+        <Input.Password />
       </Form.Item>
       <Form.Item name="role" label="Select role" rules={[{ required: isCreating }]}>
         <Select>

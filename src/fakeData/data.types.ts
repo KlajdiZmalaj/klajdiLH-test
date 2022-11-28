@@ -16,7 +16,7 @@ export interface menuPropTypes {
   id?: number;
   name?: string;
   items?: number[];
-  activeTime?: string;
+  active_time?: string;
 }
 
 export interface foodItemPropTypes {
@@ -25,4 +25,8 @@ export interface foodItemPropTypes {
   price?: string;
   image?: string;
   description?: string;
+}
+export interface restaurantServicesPropTypes {
+  menus: menuPropTypes[];
+  foodItems: foodItemPropTypes[];
 }

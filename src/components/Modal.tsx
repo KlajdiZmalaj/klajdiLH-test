@@ -1,9 +1,9 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Modal } from "antd";
-import { columnPropTypes } from "../routes/Dashboard";
-import InputComponent from "./InputComponent";
-import UserForm from "./UserForm";
-import RestaurantForm from "./RestaurantForm";
+import UserForm from "./Forms/UserForm";
+import RestaurantForm from "./Forms/RestaurantForm";
+import MenuForm from "./Forms/MenuForm";
+import MenuItemForm from "./Forms/MenuItemForm";
 
 interface modalPopTypes {
   isModalOpen: boolean;
@@ -36,6 +36,10 @@ export default ({
       {type === "user" && <UserForm isCreating={isCreating} modalData={modalData} setModalData={setModalData} />}
       {type === "restaurant" && (
         <RestaurantForm isCreating={isCreating} modalData={modalData} setModalData={setModalData} />
+      )}
+      {type === "menu" && <MenuForm isCreating={isCreating} modalData={modalData} setModalData={setModalData} />}
+      {type === "menu_item" && (
+        <MenuItemForm isCreating={isCreating} modalData={modalData} setModalData={setModalData} />
       )}
     </Modal>
   );

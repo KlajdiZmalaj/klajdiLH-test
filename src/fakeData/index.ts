@@ -33,19 +33,19 @@ export const restaurantServices = {
       id: 1,
       name: "breakfast 1",
       items: [1, 2],
-      activeTime: "07:00 - 11:00",
+      active_time: "07:00 - 11:00",
     },
     {
       id: 2,
       name: "lunch 1",
       items: [2, 3],
-      activeTime: "11:00 - 17:00",
+      active_time: "11:00 - 17:00",
     },
     {
       id: 3,
       name: "dinner 1",
       items: [2],
-      activeTime: "17:00 - 23:00",
+      active_time: "17:00 - 23:00",
     },
   ],
   foodItems: [

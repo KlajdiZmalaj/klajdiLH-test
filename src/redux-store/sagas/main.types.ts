@@ -13,6 +13,10 @@ export interface getRestaurantsSagaProps {
   params: any;
   type: string;
 }
+export interface getRestaurantServicesSagaProps {
+  params: any;
+  type: string;
+}
 //
 export interface getUsersSagaProps {
   params: any;
@@ -29,5 +33,11 @@ export interface crudRestaurantSagaProps {
   data?: any;
   restaurant_id?: number;
   type: string;
+  restore?: () => void;
+}
+export interface crudRestaurantServicesSagaProps {
+  data?: any;
+  type: string;
+  id?: number;
   restore?: () => void;
 }

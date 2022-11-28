@@ -1,9 +1,9 @@
 import { Form, Input, Select } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { restaurantPropTypes, userPropTypes } from "../fakeData/data.types";
-import { MainActions } from "../redux-store/models";
-import { IRootState } from "../redux-store/store";
+import { restaurantPropTypes, userPropTypes } from "../../fakeData/data.types";
+import { MainActions } from "../../redux-store/models";
+import { IRootState } from "../../redux-store/store";
 export interface formPropTypes {
   modalData?: restaurantPropTypes;
   setModalData?: Function;
@@ -41,7 +41,7 @@ export default ({ modalData = {}, setModalData = () => {}, isCreating }: formPro
         <Input />
       </Form.Item>
 
-      <Form.Item name="assigned_managers" label="Assign managers" rules={[{ required: isCreating }]}>
+      <Form.Item name="assigned_managers" label="Assign multiple managers" rules={[{ required: isCreating }]}>
         <Select mode="tags">
           {(users as [])
             .filter((user: userPropTypes) => user.role === "manager")
