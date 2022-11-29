@@ -1,7 +1,7 @@
 import { Form, Input, Select } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { restaurantPropTypes, userPropTypes } from "../../fakeData/data.types";
+import { menuPropTypes, restaurantPropTypes, userPropTypes } from "../../fakeData/data.types";
 import { MainActions } from "../../redux-store/models";
 import { IRootState } from "../../redux-store/store";
 export interface formPropTypes {
@@ -12,6 +12,7 @@ export interface formPropTypes {
 export default ({ modalData = {}, setModalData = () => {}, isCreating }: formPropTypes) => {
   const dispatch = useDispatch();
   const users = useSelector<IRootState>((s) => s.main.users);
+  const menus = useSelector<IRootState>((s) => s.main.restaurantServices?.menus) || [];
   const [form] = Form.useForm();
   return (
     <Form
@@ -22,7 +23,7 @@ export default ({ modalData = {}, setModalData = () => {}, isCreating }: formPro
         if (isCreating) {
           //create api
           dispatch(
-            MainActions.createRestaurant({ ...values, id: Math.random() }, () => {
+            MainActions.createRestaurant({ ...values }, () => {
               setModalData({});
               form.resetFields();
             }),
@@ -52,6 +53,17 @@ export default ({ modalData = {}, setModalData = () => {}, isCreating }: formPro
                 </Select.Option>
               );
             })}
+        </Select>
+      </Form.Item>
+      <Form.Item name="menus" label="Assign multiple menus" rules={[{ required: isCreating }]}>
+        <Select mode="tags">
+          {(menus as []).map((menu: menuPropTypes) => {
+            return (
+              <Select.Option key={menu.id} value={menu.id}>
+                {menu.name}
+              </Select.Option>
+            );
+          })}
         </Select>
       </Form.Item>
       <Form.Item>

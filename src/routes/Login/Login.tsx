@@ -31,7 +31,8 @@ export default () => {
           onSubmit={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            dispatch(AuthActions.login(formData));
+            if (isRegister) dispatch(AuthActions.register(formData));
+            else dispatch(AuthActions.login(formData));
           }}
         >
           <h1>Hunger Net</h1>

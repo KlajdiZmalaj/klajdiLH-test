@@ -1,8 +1,9 @@
-import { put, call, delay, select } from "redux-saga/effects";
+import { put, select } from "redux-saga/effects";
 import { notification } from "antd";
 import AuthActions from "../models/auth";
-import { registerSagaProps, login_register_SagaProps } from "./auth.types";
+import { login_register_SagaProps } from "./auth.types";
 import { userPropTypes } from "../../fakeData/data.types";
+import { MainActions } from "../models";
 //=============== AUTH SAGAS
 
 export function* login({ params }: login_register_SagaProps): Generator<any> {
@@ -33,5 +34,7 @@ export function* register({ params }: login_register_SagaProps): Generator<any> 
       message: "This user already exist",
       description: "Please type another username",
     });
+  } else {
+    yield put(MainActions.createUser({ ...params, role: "client" }));
   }
 }

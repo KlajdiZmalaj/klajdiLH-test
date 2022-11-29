@@ -24,7 +24,7 @@ export default ({ modalData = {}, setModalData = () => {}, isCreating }: formPro
         if (isCreating) {
           //create api
           dispatch(
-            MainActions.createRestaurantServices({ ...values, createOn: "foodItems", id: Math.random() }, () => {
+            MainActions.createRestaurantServices({ ...values, createOn: "foodItems" }, () => {
               setModalData({});
               form.resetFields();
             }),

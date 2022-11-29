@@ -39,7 +39,7 @@ const CustomCol = ({ type, col, value }: customColPropTypes) => {
           const foodFound = restaurantServices.foodItems.find((f) => f.id === foodId);
           return (
             <div key={foodId} className="foods">
-              {foodFound?.name} {foodFound?.price}
+              {foodFound?.name} {foodFound?.price + "$"}
             </div>
           );
         })}

@@ -22,7 +22,7 @@ export default ({ modalData = {}, setModalData = () => {}, isCreating }: formPro
         if (isCreating) {
           //create api
           dispatch(
-            MainActions.createUser({ ...values, id: Math.random() }, () => {
+            MainActions.createUser({ ...values }, () => {
               setModalData({});
               form.resetFields();
             }),
