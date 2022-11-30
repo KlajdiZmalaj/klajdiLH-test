@@ -23,7 +23,7 @@ export default ({ modalData = {}, setModalData = () => {}, isCreating }: formPro
     <CreateOrder />
   ) : (
     <Form form={form} initialValues={modalData} layout="vertical" className="orderForm form">
-      <h3>Order nr.{modalData.id}</h3>
+      <h3>Order {modalData.id}</h3>
       <Slider
         onChange={(status) => {
           dispatch(MainActions.updateOrder({ id: currentOrder.id, status }));
@@ -74,7 +74,10 @@ export default ({ modalData = {}, setModalData = () => {}, isCreating }: formPro
           <span></span>
           <span>
             Total :
-            {getSum((currentOrder.items || [])?.map((itemId) => foodItems.find((food) => food.id === itemId)?.price) as [])}$
+            {getSum(
+              (currentOrder.items || [])?.map((itemId) => +(foodItems.find((food) => food.id === itemId)?.price || 0)) as [],
+            )}
+            $
           </span>
         </div>
       </div>

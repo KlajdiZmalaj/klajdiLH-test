@@ -20,29 +20,47 @@ const Root: FC = () => {
     dispatch(MainActions.getRestaurantServices());
     dispatch(MainActions.getOrders());
   }, []);
-  console.log("loggedUser", loggedUser);
 
   return (
     <>
       <HashRouter>
         <Switch>
           <Route exact path="/">
-            <Redirect to={loggedUser.id ? "dashboard" : "login"} />
+            <Redirect to={loggedUser.id ? (loggedUser.role === "client" ? "client" : "dashboard") : "login"} />
           </Route>
 
-          <Route exact path="/login">
-            {loggedUser.id ? <Redirect to={"dashboard"} /> : <Routes.Login />}
+          <Route exact path={["/register", "/login"]}>
+            {loggedUser.id ? <Redirect to="/" /> : <Routes.Login />}
           </Route>
-
-          <Route exact path="/register">
-            {loggedUser.id ? <Redirect to={"dashboard"} /> : <Routes.Login />}
-          </Route>
-          <Route exact path="/dashboard">
-            {loggedUser.id ? <Routes.Dashboard /> : <Redirect to={"login"} />}
-          </Route>
+          <PrivateRoute
+            loggedUser={loggedUser}
+            allowedRoled={["admin", "manager"]}
+            Component={Routes.Dashboard}
+            path="/dashboard"
+          />
+          <PrivateRoute loggedUser={loggedUser} allowedRoled={["client"]} Component={Routes.Client} path="/client" />
         </Switch>
       </HashRouter>{" "}
     </>
+  );
+};
+type RoutePropTypes = {
+  loggedUser: userPropTypes;
+  path: string | string[];
+  Component: React.FC;
+  allowedRoled: string[];
+};
+const PrivateRoute = ({ loggedUser, path, Component, allowedRoled }: RoutePropTypes) => {
+  if (!allowedRoled.includes(loggedUser.role || "")) {
+    //client wont acces admin and oposite
+    return <Redirect to={"/"} />;
+  }
+  return loggedUser.id ? (
+    <Route exact path={path}>
+      <Component />
+    </Route>
+  ) : (
+    <Redirect to={"login"} />
   );
 };
 

@@ -12,9 +12,7 @@ export default () => {
   const restaurants = useSelector<IRootState, restaurantPropTypes[]>((s) => s.main.restaurants);
   const restaurantServices = useSelector<IRootState, restaurantServicesPropTypes>((s) => s.main.restaurantServices) || {};
   const orders = useSelector<IRootState, orderPropTypes[]>((s) => s.main.orders);
-
   const isLoading = useSelector<IRootState>((s) => s.main.loading) as boolean;
-  console.log("orders", orders);
 
   return (
     <div className="page">

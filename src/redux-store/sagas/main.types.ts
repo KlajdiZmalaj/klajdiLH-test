@@ -1,3 +1,5 @@
+import { orderPropTypes } from "../../fakeData/data.types";
+
 type commonParamsType = {
   id: number;
   from?: Date;
@@ -34,7 +36,7 @@ export interface crudUserSagaProps {
 }
 export interface crudOrderSagaProps {
   params: commonParamsType;
-  data?: { id: number };
+  data: { id: number; data?: orderPropTypes };
   id?: number;
   type: string;
   restore?: () => void;

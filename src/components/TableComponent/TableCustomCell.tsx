@@ -64,9 +64,9 @@ const CustomCol = ({ type, col, value }: customColPropTypes) => {
         </div>
       )}
       {/* Order by user  */}
-      {type === "order" && col === "ordered_by" && <div> {users.find((u) => u.id === +value)?.full_name}</div>}
+      {type === "order" && col === "ordered_by" && <div> {users.find((u) => u.id === value)?.full_name}</div>}
       {/* Order in wich resttaurnat */}
-      {type === "order" && col === "ordered_in" && <div> {restaurants.find((r) => r.id === +value)?.name}</div>}
+      {type === "order" && col === "ordered_in" && <div> {restaurants.find((r) => r.id === value)?.name}</div>}
     </div>
   );
 };

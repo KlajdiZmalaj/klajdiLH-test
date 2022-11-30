@@ -25,9 +25,11 @@ import {
   foodItemsRef,
   getFoodItemRef,
   getMenuRef,
+  getOrderRef,
   getRestaurantRef,
   getUserRef,
   menusRef,
+  ordersRef,
   restaurantsRef,
   usersRef,
 } from "../../firebase";
@@ -257,36 +259,66 @@ export function* deleteRestaurantServices({
 
 //=============== orders SERVICES SAGAS
 //--get
-export function* getOrders({ params }: crudOrderSagaProps): Generator<any> {
-  if (true) {
-    yield put(MainActions.setOrders(orders));
-  }
+export function* getOrders(): Generator<any> {
+  let orders = [] as orderPropTypes[];
+  yield getDocs(ordersRef).then((snapshot: any) => {
+    snapshot.forEach((item: any) => orders.push({ ...item.data(), id: item.id }));
+  });
+  yield put(MainActions.setOrders(orders));
 }
 //--create
-export function* createOrder({ data, restore = () => {} }: crudOrderSagaProps): Generator<any> {}
+export function* createOrder({ data: { data }, restore = () => {} }: crudOrderSagaProps): Generator<any, void, orderPropTypes[]> {
+  let createdId;
+  try {
+    yield addDoc(ordersRef, data).then((_) => (createdId = _.id));
+  } catch (err: any) {
+    handleError(err);
+  }
+  if (createdId) {
+    const orders = yield select((s) => s.main.orders) || [];
+    yield put(MainActions.setOrders([...orders, { ...data, id: createdId }]));
+    restore();
+    successMsg("Order placed sucefully");
+  }
+}
 //--update
 export function* updateOrder({ data }: crudOrderSagaProps): Generator<any, void, orderPropTypes[]> {
-  //debounce effect half sec on fast status change
-  yield delay(500);
-  const orders = yield select((s) => s.main.orders);
-  yield put(
-    MainActions.setOrders(
-      orders.map((order) => {
-        return order.id === data?.id ? { ...order, ...data } : order;
-      }),
-    ),
-  );
-  successMsg("Order updated sucefully");
+  let updated = false;
+
+  try {
+    yield updateDoc(getOrderRef(data.id), data).then((_) => (updated = true));
+  } catch (err: any) {
+    handleError(err);
+  }
+  if (updated) {
+    const orders = yield select((s) => s.main.orders);
+    yield put(
+      MainActions.setOrders(
+        orders.map((order) => {
+          return order.id === data?.id ? { ...order, ...data } : order;
+        }),
+      ),
+    );
+    successMsg("Order updated sucefully");
+  }
 }
 //--delete
 export function* deleteOrder({ id }: crudOrderSagaProps): Generator<any, void, orderPropTypes[]> {
-  const orders = yield select((s) => s.main.orders);
-  yield put(
-    MainActions.setOrders(
-      orders.filter((order) => {
-        return order.id !== id;
-      }),
-    ),
-  );
-  successMsg("Order deleted sucefully");
+  let deleted = false;
+  try {
+    yield deleteDoc(getOrderRef(id)).then((_) => (deleted = true));
+  } catch (error: any) {
+    handleError(error);
+  }
+  if (deleted) {
+    const orders = yield select((s) => s.main.orders);
+    yield put(
+      MainActions.setOrders(
+        orders.filter((order) => {
+          return order.id !== id;
+        }),
+      ),
+    );
+    successMsg("Order deleted sucefully");
+  }
 }

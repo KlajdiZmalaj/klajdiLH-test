@@ -1,19 +1,30 @@
 //
-import { Select } from "antd";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { foodItemPropTypes, menuPropTypes, orderPropTypes, restaurantPropTypes } from "../../fakeData/data.types";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { foodItemPropTypes, menuPropTypes, orderPropTypes, restaurantPropTypes, userPropTypes } from "../../fakeData/data.types";
+import { MainActions } from "../../redux-store/models";
 import { IRootState } from "../../redux-store/store";
 import InputComponent from "../InputComponent";
 import { isCurrentTimeBetween } from "../TableComponent/TableCustomCell";
 
 export default () => {
+  const dispatch = useDispatch();
+  //
   const foodItems = useSelector<IRootState, foodItemPropTypes[]>((s) => s.main.restaurantServices.foodItems) || [];
   const restaurants = useSelector<IRootState, restaurantPropTypes[]>((s) => s.main.restaurants) || [];
   const menus = useSelector<IRootState, menuPropTypes[]>((s) => s.main.restaurantServices.menus) || [];
-
+  const loggedUser = useSelector<IRootState, userPropTypes>((s) => s.auth.loggedUser);
+  //
   const [formData, setData] = useState<orderPropTypes>({});
   const currentRestaurant = restaurants.find((restaurant) => restaurant.id === formData.ordered_in) || {};
+  const currentMenu = menus.find((menu) => menu.id === formData.menu_id) || {};
+
+  //
+  useEffect(() => {
+    //when user changes menu all ites set to other menu are resett
+    setData({ ...formData, items: [] });
+  }, [formData.menu_id]);
+
   return (
     <div className="createOrder">
       <InputComponent
@@ -48,9 +59,72 @@ export default () => {
       {formData.menu_id && (
         <>
           <div className="label">Select menu items</div>
-          <div className="menuItems"></div>
+          <div className="menuItems">
+            {(currentMenu.items || []).map((foodItemId) => {
+              const foodItemFound = foodItems.find((food) => food.id === foodItemId) || {};
+              return <AddFoodITem formData={formData} setData={setData} foodItem={foodItemFound} />;
+            })}
+          </div>
         </>
       )}
+
+      {formData.items?.length ? (
+        <button
+          onClick={() => {
+            dispatch(
+              MainActions.createOrder({
+                data: { ...formData, status: 1, ordered_by: loggedUser.id, date: new Date().toLocaleString("it-IT") },
+                restore: () => {
+                  setData({ ...formData, items: [] });
+                },
+              }),
+            );
+          }}
+          className="placeOrderBtn"
+        >
+          Place Order!
+        </button>
+      ) : (
+        false
+      )}
+    </div>
+  );
+};
+type AddFoodITemTypes = {
+  foodItem: foodItemPropTypes;
+  setData: Function;
+  formData: menuPropTypes;
+};
+const AddFoodITem = ({ foodItem, setData, formData }: AddFoodITemTypes) => {
+  const [count, setCount] = useState(0);
+  return (
+    <div>
+      <div className="item">
+        <span>{foodItem.name}</span> <span>{foodItem.price}$</span>
+      </div>
+      <div className="count">
+        <button
+          onClick={() => {
+            if (count > 0) {
+              let toSplice = [...(formData.items || [])];
+              toSplice.splice(toSplice.indexOf(foodItem.id || 0), 1);
+              setData({ ...formData, items: toSplice });
+              setCount(count - 1);
+            }
+          }}
+        >
+          -
+        </button>{" "}
+        <span>{count}</span>
+        <button
+          onClick={() => {
+            setData({ ...formData, items: [...(formData.items || []), foodItem.id] });
+            setCount(count + 1);
+          }}
+        >
+          +
+        </button>
+      </div>
     </div>
   );
 };

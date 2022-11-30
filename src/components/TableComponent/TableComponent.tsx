@@ -30,7 +30,6 @@ export default ({ title, columns, dataSource = [], filterKey, type, isLoading }:
   const filteredDataSource = (dataSource as dataSourceType[]).filter((data) =>
     filterKey ? data?.[filterKey as keyof typeof data] === filterVal || filterVal.includes(filterKey) : true,
   ) as dataSourceType;
-  console.log("dataSource", dataSource);
 
   return (
     <div className="tableComponent">
