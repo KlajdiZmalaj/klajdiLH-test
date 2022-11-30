@@ -24,6 +24,10 @@ Firebase Users :
 - Manager => username:mondi , password:123
 - Client => username:kz7 , password:123
 
+## Check url online
+
+https://klajdizmalaj.github.io/klajdiLH-test
+
 ## Improvements todo:
 
 - Project is 90% typed, there are some more types to add in future
