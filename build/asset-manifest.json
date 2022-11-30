@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/klajdiLH-test/static/css/main.b2eb692d.css",
-    "main.js": "/klajdiLH-test/static/js/main.d2994ba5.js",
+    "main.js": "/klajdiLH-test/static/js/main.2562ff0a.js",
     "index.html": "/klajdiLH-test/index.html",
     "main.b2eb692d.css.map": "/klajdiLH-test/static/css/main.b2eb692d.css.map",
-    "main.d2994ba5.js.map": "/klajdiLH-test/static/js/main.d2994ba5.js.map"
+    "main.2562ff0a.js.map": "/klajdiLH-test/static/js/main.2562ff0a.js.map"
   },
   "entrypoints": [
     "static/css/main.b2eb692d.css",
-    "static/js/main.d2994ba5.js"
+    "static/js/main.2562ff0a.js"
   ]
 }

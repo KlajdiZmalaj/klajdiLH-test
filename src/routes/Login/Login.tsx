@@ -16,6 +16,8 @@ export default () => {
     [formData],
   );
   //
+  console.log("isRegister", isRegister);
+
   const dispatch = useDispatch();
 
   return (
@@ -78,13 +80,13 @@ export default () => {
           {!isRegister ? (
             <div className="form-group">
               <p>
-                Not Registered? <a href="#register">Sign Up</a>
+                Not Registered? <a href="#/register">Sign Up</a>
               </p>
             </div>
           ) : (
             <div className="form-group">
               <p>
-                Registered? <a href="#login">Login here</a>
+                Registered? <a href="#/login">Login here</a>
               </p>
             </div>
           )}

@@ -29,7 +29,10 @@ const Root: FC = () => {
             <Redirect to={loggedUser.id ? (loggedUser.role === "client" ? "client" : "dashboard") : "login"} />
           </Route>
 
-          <Route exact path={["/register", "/login"]}>
+          <Route exact path={["/login"]}>
+            {loggedUser.id ? <Redirect to="/" /> : <Routes.Login />}
+          </Route>
+          <Route exact path={["/register"]}>
             {loggedUser.id ? <Redirect to="/" /> : <Routes.Login />}
           </Route>
           <PrivateRoute
