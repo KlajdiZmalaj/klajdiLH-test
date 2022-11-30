@@ -1,4 +1,4 @@
-import { Form, Input, Select, TimePicker } from "antd";
+import { DatePicker, Form, Input, Select, TimePicker } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { menuPropTypes, restaurantServicesPropTypes } from "../../fakeData/data.types";

@@ -228,7 +228,8 @@ header {
     }
     &-header {
       background-color: #0000000a;
-
+      //scrolbar of boddy p[addding
+      padding-right: 10px;
       span {
         font-weight: 600;
       }
@@ -243,6 +244,10 @@ header {
       &:hover {
         background-color: #0000000c;
       }
+    }
+    &-body {
+      max-height: 300px;
+      overflow-y: scroll;
     }
   }
   h4 {
@@ -313,6 +318,12 @@ header {
   }
 }
 .ant-select-selection-item {
+  .custumCol {
+    justify-content: flex-start;
+    .orderStatus div {
+      display: none;
+    }
+  }
   img {
     display: none;
   }
@@ -448,3 +459,20 @@ hr {
     color: #fff;
   }
 }
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(187, 187, 187);
+  filter: brightness(1.4);
+}
+
+/* Handle on hover */

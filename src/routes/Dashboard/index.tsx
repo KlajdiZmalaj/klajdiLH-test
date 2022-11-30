@@ -1,7 +1,7 @@
 import { Spin } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
-import { Navbar, Table } from "../../components";
+import { CheckPermissions, Navbar, Table } from "../../components";
 import { orderPropTypes, restaurantPropTypes, restaurantServicesPropTypes, userPropTypes } from "../../fakeData/data.types";
 import { IRootState } from "../../redux-store/store";
 import "./styles.scss";
@@ -22,18 +22,30 @@ export default () => {
         </div>
       )}
       <Navbar area="Admin Dashboard" />
-      <Table
-        isLoading={isLoading}
-        type="user"
-        filterKey="role"
-        title="Users"
-        dataSource={users.filter((u) => /*Remove other admin users */ u.role !== "admin")}
-        columns={usersColumns}
-      />
-      <Table type="restaurant" title="Restaurants" dataSource={restaurants} columns={restaurantsColumns} />
-      <Table type="menu" title="Menus" dataSource={restaurantServices.menus} columns={menusColumns} />
-      <Table type="menu_item" title="Menu Items" dataSource={restaurantServices.foodItems} columns={menuItemColumns} />
-      <Table type="order" title="Orders" dataSource={orders} columns={ordersColumns} />
+      <CheckPermissions allowed={["user.view"]}>
+        <Table
+          isLoading={isLoading}
+          type="user"
+          filterKey="role"
+          title="Users"
+          dataSource={users.filter((u) => /*Remove other admin users */ u.role !== "admin")}
+          columns={usersColumns}
+        />
+      </CheckPermissions>
+
+      <CheckPermissions allowed={["restaurant.view"]}>
+        <Table type="restaurant" title="Restaurants" dataSource={restaurants} columns={restaurantsColumns} />
+      </CheckPermissions>
+
+      <CheckPermissions allowed={["menu.view"]}>
+        <Table type="menu" title="Menus" dataSource={restaurantServices.menus} columns={menusColumns} />
+      </CheckPermissions>
+      <CheckPermissions allowed={["menu.view"]}>
+        <Table type="menu_item" title="Menu Items" dataSource={restaurantServices.foodItems} columns={menuItemColumns} />
+      </CheckPermissions>
+      <CheckPermissions allowed={["order.view"]}>
+        <Table filterKey="status" type="order" title="Orders" dataSource={orders} columns={ordersColumns} />
+      </CheckPermissions>
     </div>
   );
 };

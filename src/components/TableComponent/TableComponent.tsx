@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { menuPropTypes, orderPropTypes, restaurantPropTypes, userPropTypes } from "../../fakeData/data.types";
 import { MainActions } from "../../redux-store/models";
 import { columnPropTypes } from "../../routes/Dashboard/tableCols";
+import CheckPermissions from "../CheckPermissions";
 import Modal from "../Modal";
 import TableCustomCell from "./TableCustomCell";
 
@@ -27,8 +28,9 @@ export default ({ title, columns, dataSource = [], filterKey, type, isLoading }:
   const dispatch = useDispatch();
   //filter table dataSource based on filterkay prop, ex : filter user rows by role name
   //if has filter key filter by select value otherwise dispaly all
+
   const filteredDataSource = (dataSource as dataSourceType[]).filter((data) =>
-    filterKey ? data?.[filterKey as keyof typeof data] === filterVal || filterVal.includes(filterKey) : true,
+    filterKey ? `${data?.[filterKey as keyof typeof data]}` === `${filterVal}` || filterVal.includes(filterKey) : true,
   ) as dataSourceType;
 
   return (
@@ -55,7 +57,8 @@ export default ({ title, columns, dataSource = [], filterKey, type, isLoading }:
             {Object.keys((dataSource as []).reduce((a, b: any) => ({ ...a, [b[filterKey]]: a }), {}) as []).map((data) => {
               return (
                 <Select.Option key={data} value={data}>
-                  {data}
+                  {/*Renders custum div becouse filter key is ID => transform id to label */}
+                  {+data ? <TableCustomCell type="order" col="status" value={data} /> : data}
                 </Select.Option>
               );
             })}
@@ -95,46 +98,53 @@ export default ({ title, columns, dataSource = [], filterKey, type, isLoading }:
                       {col?.addonAfter}
                     </span>
                   ))}
-                  <span className="actions">
-                    <Tooltip title="Delete record">
-                      <i
-                        onClick={() => {
-                          switch (type) {
-                            case "user":
-                              dispatch(MainActions.deleteUser(data.id));
-                              break;
-                            case "restaurant":
-                              dispatch(MainActions.deleteRestaurant(data.id));
-                              break;
 
-                            case "menu":
-                              dispatch(MainActions.deleteRestaurantServices({ deleteOn: "menus", id: data.id }));
-                              break;
-                            case "menu_item":
-                              dispatch(MainActions.deleteRestaurantServices({ deleteOn: "foodItems", id: data.id }));
-                              break;
-                            case "order":
-                              dispatch(MainActions.deleteOrder(data.id));
-                              break;
-                            default:
-                              break;
-                          }
-                        }}
-                        className="fa fa-trash"
-                        aria-hidden="true"
-                      ></i>
-                    </Tooltip>
-                    <Tooltip title="Edit record">
-                      <i
-                        onClick={() => {
-                          toggleIsCreating(false);
-                          setIsModalOpen(true);
-                          setModalData(data);
-                        }}
-                        className="fa fa-pencil"
-                        aria-hidden="true"
-                      ></i>
-                    </Tooltip>
+                  <span className="actions">
+                    <>
+                      <CheckPermissions allowed={[`${type}.delete`]}>
+                        <Tooltip title="Delete record">
+                          <i
+                            onClick={() => {
+                              switch (type) {
+                                case "user":
+                                  dispatch(MainActions.deleteUser(data.id));
+                                  break;
+                                case "restaurant":
+                                  dispatch(MainActions.deleteRestaurant(data.id));
+                                  break;
+
+                                case "menu":
+                                  dispatch(MainActions.deleteRestaurantServices({ deleteOn: "menus", id: data.id }));
+                                  break;
+                                case "menu_item":
+                                  dispatch(MainActions.deleteRestaurantServices({ deleteOn: "foodItems", id: data.id }));
+                                  break;
+                                case "order":
+                                  dispatch(MainActions.deleteOrder(data.id));
+                                  break;
+                                default:
+                                  break;
+                              }
+                            }}
+                            className="fa fa-trash"
+                            aria-hidden="true"
+                          ></i>
+                        </Tooltip>
+                      </CheckPermissions>
+                      <CheckPermissions allowed={[`${type}.update`]}>
+                        <Tooltip title="Edit record">
+                          <i
+                            onClick={() => {
+                              toggleIsCreating(false);
+                              setIsModalOpen(true);
+                              setModalData(data);
+                            }}
+                            className="fa fa-pencil"
+                            aria-hidden="true"
+                          ></i>
+                        </Tooltip>
+                      </CheckPermissions>
+                    </>
                   </span>
                 </div>
               );
@@ -142,17 +152,19 @@ export default ({ title, columns, dataSource = [], filterKey, type, isLoading }:
           )}
         </div>
       </div>
-      <div className="addNew">
-        <button
-          onClick={() => {
-            toggleIsCreating(true);
-            setIsModalOpen(true);
-            setModalData({});
-          }}
-        >
-          Add new <i className="fa fa-plus" aria-hidden="true"></i>
-        </button>
-      </div>
+      <CheckPermissions allowed={[`${type}.create`]}>
+        <div className="addNew">
+          <button
+            onClick={() => {
+              toggleIsCreating(true);
+              setIsModalOpen(true);
+              setModalData({});
+            }}
+          >
+            Add new <i className="fa fa-plus" aria-hidden="true"></i>
+          </button>
+        </div>
+      </CheckPermissions>
     </div>
   );
 };

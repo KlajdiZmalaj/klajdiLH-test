@@ -7,6 +7,7 @@ import { MainActions } from "../../redux-store/models";
 import { IRootState } from "../../redux-store/store";
 import CreateOrder from "./CreateOrder";
 import { getSum } from "../../utils";
+import CheckPermissions from "../CheckPermissions";
 
 export interface formPropTypes {
   modalData?: orderPropTypes;
@@ -23,42 +24,48 @@ export default ({ modalData = {}, setModalData = () => {}, isCreating }: formPro
     <CreateOrder />
   ) : (
     <Form form={form} initialValues={modalData} layout="vertical" className="orderForm form">
-      <h3>Order {modalData.id}</h3>
-      <Slider
-        onChange={(status) => {
-          dispatch(MainActions.updateOrder({ id: currentOrder.id, status }));
-        }}
-        marks={orderStatuses}
-        step={null}
-        defaultValue={currentOrder.status}
-        max={6}
-        min={1}
-      />
-      {currentOrder.status === 1 && (
-        <div className="acceptOder">
-          <h5>Accept this order ?</h5>
-          <div className="buttons">
-            <button
-              onClick={() => {
-                //aprovced status id
-                dispatch(MainActions.updateOrder({ id: currentOrder.id, status: 2 }));
-              }}
-            >
-              Yes
-            </button>
-            <button
-              onClick={() => {
-                //rejected status id
-                dispatch(MainActions.updateOrder({ id: currentOrder.id, status: 6 }));
-              }}
-            >
-              No
-            </button>
-          </div>
-        </div>
-      )}
+      <h3>Order : {modalData.id}</h3>
+      <h3>{modalData.date}</h3>
+      <CheckPermissions allowed={[`order.update`]}>
+        <>
+          <Slider
+            onChange={(status) => {
+              dispatch(MainActions.updateOrder({ id: currentOrder.id, status }));
+            }}
+            marks={orderStatuses}
+            step={null}
+            defaultValue={currentOrder.status}
+            max={6}
+            min={1}
+          />
+          {currentOrder.status === 1 && (
+            <div className="acceptOder">
+              <h5>Accept this order ?</h5>
+              <div className="buttons">
+                <button
+                  onClick={() => {
+                    //aprovced status id
+                    dispatch(MainActions.updateOrder({ id: currentOrder.id, status: 2 }));
+                  }}
+                >
+                  Yes
+                </button>
+                <button
+                  onClick={() => {
+                    //rejected status id
+                    dispatch(MainActions.updateOrder({ id: currentOrder.id, status: 6 }));
+                  }}
+                >
+                  No
+                </button>
+              </div>
+            </div>
+          )}
+        </>
+      </CheckPermissions>
+
       <hr />
-      <h3>Order receipt</h3>
+      <h3>Receipt</h3>
       <div className="orderItems">
         {(currentOrder.items || [])?.map((itemId) => {
           const foodFound = foodItems.find((food) => food.id === itemId);

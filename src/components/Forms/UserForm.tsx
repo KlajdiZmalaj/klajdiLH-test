@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { userPropTypes } from "../../fakeData/data.types";
 import { MainActions } from "../../redux-store/models";
 import { IRootState } from "../../redux-store/store";
+import CheckPermissions from "../CheckPermissions";
 export interface formPropTypes {
   modalData?: userPropTypes;
   setModalData?: Function;
@@ -54,11 +55,13 @@ export default ({ modalData = {}, setModalData = () => {}, isCreating }: formPro
           })}
         </Select>
       </Form.Item>
-      <Form.Item>
-        <button type="submit">
-          Save <i className="fa fa-paper-plane" aria-hidden="true"></i>
-        </button>
-      </Form.Item>
+      <CheckPermissions allowed={[`user.update`]}>
+        <Form.Item>
+          <button type="submit">
+            Save <i className="fa fa-paper-plane" aria-hidden="true"></i>
+          </button>
+        </Form.Item>
+      </CheckPermissions>
     </Form>
   );
 };

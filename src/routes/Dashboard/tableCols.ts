@@ -33,7 +33,7 @@ export const menuItemColumns = [
 export const ordersColumns = [
   { title: "ID", dataIndex: "id", key: "id" },
   { title: "Status", dataIndex: "status", key: "status", customCol: true },
-  { title: "Date", dataIndex: "date", key: "date" },
+  { title: "Date", dataIndex: "date", key: "date", customCol: true },
   { title: "Ordered by", dataIndex: "ordered_by", key: "ordered_by", customCol: true },
   { title: "Ordered in", dataIndex: "ordered_in", key: "ordered_in", customCol: true },
 ] as columnPropTypes[];

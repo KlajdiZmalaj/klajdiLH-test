@@ -1,12 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import {
-  orderPropTypes,
-  orderTypes,
-  restaurantPropTypes,
-  restaurantServicesPropTypes,
-  userPropTypes,
-} from "../../fakeData/data.types";
+import { orderTypes, restaurantPropTypes, restaurantServicesPropTypes, userPropTypes } from "../../fakeData/data.types";
 import { IRootState } from "../../redux-store/store";
 import { Tooltip } from "antd";
 import { orderStatuses } from "../../fakeData";
@@ -67,6 +61,7 @@ const CustomCol = ({ type, col, value }: customColPropTypes) => {
       {type === "order" && col === "ordered_by" && <div> {users.find((u) => u.id === value)?.full_name}</div>}
       {/* Order in wich resttaurnat */}
       {type === "order" && col === "ordered_in" && <div> {restaurants.find((r) => r.id === value)?.name}</div>}
+      {type === "order" && col === "date" && <div> {new Date(value).toLocaleString("it")}</div>}
     </div>
   );
 };

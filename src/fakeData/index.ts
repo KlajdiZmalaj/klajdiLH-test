@@ -1,5 +1,22 @@
-//================================== default FAKE mock data as api responses for inital setup ==============================
+//================================== default FAKE mock data demonstration ==============================
 
+/////PERMISSIONS
+const admin = ["*"];
+const manager = [
+  "order.view",
+  "order.update",
+  "order.create",
+  "menu.view",
+  "menu.create",
+  "menu.update",
+  "menu_item.view",
+  "menu_item.create",
+  "menu_item.update",
+];
+const client = ["restaurant.view", "order.view", "order.create", , "order.delete"];
+export const permissions = { manager, admin, client };
+
+//api responses ==============================================================================
 export const restaurants = [
   {
     id: 1,
@@ -10,10 +27,7 @@ export const restaurants = [
   },
 ];
 
-const manager = ["order.view", "order.update", "order.create", "menu.view", "menu.create", "menu.update"];
-const admin = ["*"];
-const client = ["restaurant.view", "order.view", "order.create"];
-export const permissions = { manager, admin, client };
+//==============================================================================
 
 export const users = [
   {
@@ -26,6 +40,7 @@ export const users = [
   { id: 2, role: "manager", full_name: "Manager Toni", username: "toni", password: "12345" },
   { id: 3, role: "client", full_name: "Client Arbri", username: "arbri", password: "12345" },
 ];
+//==============================================================================
 
 export const restaurantServices = {
   menus: [
@@ -74,6 +89,7 @@ export const restaurantServices = {
     },
   ],
 };
+//==============================================================================
 
 export const orders = [
   {
