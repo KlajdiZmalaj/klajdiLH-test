@@ -13,7 +13,7 @@ const manager = [
   "menu_item.create",
   "menu_item.update",
 ];
-const client = ["restaurant.view", "order.view", "order.create", , "order.delete"];
+const client = ["restaurant.view", "order.view", "order.create", "order.delete"];
 export const permissions = { manager, admin, client };
 
 //api responses ==============================================================================
