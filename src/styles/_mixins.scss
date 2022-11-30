@@ -1,5 +1,5 @@
 @mixin buttonMix {
-  border: 1px solid #21356d;
+  border: 1px solid var(--main);
   font-size: 13px;
   padding: 0 10px;
   height: 30px;

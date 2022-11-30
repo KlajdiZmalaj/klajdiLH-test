@@ -23,7 +23,7 @@
   border-radius: 5px;
 }
 .user-icon {
-  background: #ffe000;
+  background: var(--accent);
   border-radius: 50%;
   width: 100px;
   height: 100px;
@@ -85,7 +85,7 @@
   button {
     outline: none;
     background: #1c2c59;
-    color: #ffe000;
+    color: var(--accent);
     padding: 16px;
     display: block;
     width: 100%;

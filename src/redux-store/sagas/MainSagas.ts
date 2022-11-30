@@ -267,7 +267,7 @@ export function* getOrders(): Generator<any> {
   yield put(MainActions.setOrders(orders));
 }
 //--create
-export function* createOrder({ data: { data }, restore = () => {} }: crudOrderSagaProps): Generator<any, void, orderPropTypes[]> {
+export function* createOrder({ data: { data }, restore }: crudOrderSagaProps): Generator<any, void, orderPropTypes[]> {
   let createdId;
   try {
     yield addDoc(ordersRef, data).then((_) => (createdId = _.id));
@@ -277,7 +277,9 @@ export function* createOrder({ data: { data }, restore = () => {} }: crudOrderSa
   if (createdId) {
     const orders = yield select((s) => s.main.orders) || [];
     yield put(MainActions.setOrders([...orders, { ...data, id: createdId }]));
-    restore();
+    console.log("ca ka restore", restore);
+
+    restore?.();
     successMsg("Order placed sucefully");
   }
 }

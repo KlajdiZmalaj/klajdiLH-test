@@ -24,6 +24,7 @@ export default () => {
     //when user changes menu all ites set to other menu are resett
     setData({ ...formData, items: [] });
   }, [formData.menu_id]);
+  console.log("formdata", formData);
 
   return (
     <div className="createOrder">
@@ -56,7 +57,7 @@ export default () => {
           </div>
         </>
       )}
-      {formData.menu_id && (
+      {formData.menu_id ? (
         <>
           <div className="label">Select menu items</div>
           <div className="menuItems">
@@ -66,18 +67,23 @@ export default () => {
             })}
           </div>
         </>
+      ) : (
+        false
       )}
 
       {formData.items?.length ? (
         <button
           onClick={() => {
             dispatch(
-              MainActions.createOrder({
-                data: { ...formData, status: 1, ordered_by: loggedUser.id, date: new Date().toLocaleString("it-IT") },
-                restore: () => {
-                  setData({ ...formData, items: [] });
+              MainActions.createOrder(
+                {
+                  data: { ...formData, status: 1, ordered_by: loggedUser.id, date: new Date().toLocaleString("it-IT") },
                 },
-              }),
+                () => {
+                  //remove selectedmenu id so he can place another order in the restaurant
+                  setData({ ...formData, menu_id: 0 });
+                },
+              ),
             );
           }}
           className="placeOrderBtn"

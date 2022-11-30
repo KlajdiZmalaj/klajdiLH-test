@@ -21,7 +21,7 @@ export default () => {
           <Spin /> Loading...
         </div>
       )}
-      <Navbar />
+      <Navbar area="Admin Dashboard" />
       <Table
         isLoading={isLoading}
         type="user"

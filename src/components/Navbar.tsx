@@ -5,7 +5,7 @@ import { IRootState } from "../redux-store/store";
 import logo from "../images/logo.png";
 import { AuthActions } from "../redux-store/models";
 
-export default () => {
+export default ({ area }: { area: string }) => {
   const dispatch = useDispatch();
   //
   const loggedUser = useSelector<IRootState, userPropTypes>((s) => s.auth.loggedUser);
@@ -14,7 +14,7 @@ export default () => {
     <header>
       <nav>
         <h3>
-          Welcome <span>{loggedUser.full_name}</span>
+          Welcome <span>{loggedUser.full_name}</span> <div className="area">{area}</div>
         </h3>
         <img src={logo} alt="" className="logo" />
         <div className="actions">
