@@ -1,4 +1,4 @@
-## Hunger Net Version 1.0.0
+## Hunger Net Version 1.2.0
 
 ## Features:
 
@@ -23,7 +23,7 @@ Role admin and manager has view Dashboard as its route and client has view Clien
 
 Firebase Users :
 
-- Admin => e-mail:admin@hunger.net , password:12345
+- Admin => e-mail:admin@hunger.net , password:admin123
 - Manager => username:klajdizmalaj@icloud.com , password:123456
 - Client => anyone can register
 
