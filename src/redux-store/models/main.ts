@@ -11,7 +11,7 @@ const { Types, Creators } = createActions({
   setUsers: ["users"],
   updateUser: ["data"],
   deleteUser: ["user_id"],
-  createUser: ["data", "restore"],
+  createUser: ["data", "restore", "firstTime"],
 
   //restaurants
   getRestaurants: ["params"],

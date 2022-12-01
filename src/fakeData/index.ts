@@ -12,6 +12,8 @@ const manager = [
   "menu_item.view",
   "menu_item.create",
   "menu_item.update",
+  "restaurant.view",
+  "restaurant.update_menus",
 ];
 const client = ["restaurant.view", "order.view", "order.create", "order.delete"];
 export const permissions = { manager, admin, client };

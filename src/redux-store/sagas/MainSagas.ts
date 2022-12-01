@@ -1,7 +1,7 @@
-import { put, delay, select } from "redux-saga/effects";
+import { put, select } from "redux-saga/effects";
 import { notification } from "antd";
 import MainActions from "../models/main";
-import { orders, permissions } from "../../fakeData";
+import { permissions } from "../../fakeData";
 import {
   createRestaurantServicesSagaProps,
   crudOrderSagaProps,
@@ -20,8 +20,9 @@ import {
   userPropTypes,
 } from "../../fakeData/data.types";
 //backend
-import { addDoc, deleteDoc, getDocs, updateDoc } from "firebase/firestore";
+import { addDoc, deleteDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
 import {
+  auth,
   foodItemsRef,
   getFoodItemRef,
   getMenuRef,
@@ -34,6 +35,7 @@ import {
   usersRef,
 } from "../../firebase";
 import { handleError } from "../../config";
+import { getAuth, signInWithEmailAndPassword, updateEmail } from "firebase/auth";
 
 const successMsg = (message: string) => {
   notification["success"]({
@@ -69,13 +71,13 @@ export function* getUsers(): Generator<any> {
 export function* createUser({ data, restore = () => {} }: crudUserSagaProps): Generator<any> {
   let createdId;
   try {
-    yield addDoc(usersRef, data).then((_) => (createdId = true));
+    yield setDoc(getUserRef(data?.uid), data).then((_) => (createdId = true));
   } catch (error: any) {
     handleError(error);
   }
   if (createdId) {
     const currentUsers = yield select((s) => s.main.users) || [];
-    yield put(MainActions.setUsers([...(currentUsers as []), { ...data, id: createdId }]));
+    yield put(MainActions.setUsers([...(currentUsers as []), { ...data, id: data?.uid }]));
     //restore function restores state of form , so another user can be created
     restore();
     successMsg("User created");
@@ -85,6 +87,13 @@ export function* createUser({ data, restore = () => {} }: crudUserSagaProps): Ge
 export function* updateUser({ data }: crudUserSagaProps): Generator<any> {
   let updated = false;
   try {
+    // yield signInWithEmailAndPassword(auth, data.old_email, data.old_password).then((user: any) => {
+    //   user.user.updateEmail(data.email);
+    //   user.user.updatePassword(data.password);
+    // });
+    // Object.keys(data).forEach((key) => {
+    //   if (key.includes("old_")) delete data[key];
+    // });
     yield updateDoc(getUserRef(data.id), data).then((_) => (updated = true));
   } catch (error: any) {
     handleError(error);

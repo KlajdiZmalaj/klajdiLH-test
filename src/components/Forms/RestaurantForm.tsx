@@ -42,32 +42,36 @@ export default ({ modalData = {}, setModalData = () => {}, isCreating }: formPro
       <Form.Item name="location" label="Location Address" rules={[{ required: isCreating }]}>
         <Input />
       </Form.Item>
-
-      <Form.Item name="assigned_managers" label="Assign multiple managers" rules={[{ required: isCreating }]}>
-        <Select mode="tags">
-          {(users as [])
-            .filter((user: userPropTypes) => user.role === "manager")
-            .map((user: userPropTypes) => {
+      <CheckPermissions allowed={[`restaurant.assigned_managers`]}>
+        <Form.Item name="assigned_managers" label="Assign multiple managers" rules={[{ required: isCreating }]}>
+          <Select mode="tags">
+            {(users as [])
+              .filter((user: userPropTypes) => user.role === "manager")
+              .map((user: userPropTypes) => {
+                return (
+                  <Select.Option key={user.id} value={user.id}>
+                    {user.full_name}
+                  </Select.Option>
+                );
+              })}
+          </Select>
+        </Form.Item>
+      </CheckPermissions>
+      <CheckPermissions allowed={[`restaurant.update_menus`]}>
+        <Form.Item name="menus" label="Assign multiple menus" rules={[{ required: isCreating }]}>
+          <Select mode="tags">
+            {(menus as []).map((menu: menuPropTypes) => {
               return (
-                <Select.Option key={user.id} value={user.id}>
-                  {user.full_name}
+                <Select.Option key={menu.id} value={menu.id}>
+                  {menu.name}
                 </Select.Option>
               );
             })}
-        </Select>
-      </Form.Item>
-      <Form.Item name="menus" label="Assign multiple menus" rules={[{ required: isCreating }]}>
-        <Select mode="tags">
-          {(menus as []).map((menu: menuPropTypes) => {
-            return (
-              <Select.Option key={menu.id} value={menu.id}>
-                {menu.name}
-              </Select.Option>
-            );
-          })}
-        </Select>
-      </Form.Item>
-      <CheckPermissions allowed={[`restaurant.update`]}>
+          </Select>
+        </Form.Item>
+      </CheckPermissions>
+
+      <CheckPermissions allowed={[`restaurant.update`, "restaurant.update_menus"]}>
         <Form.Item>
           <button type="submit">
             Save <i className="fa fa-paper-plane" aria-hidden="true"></i>

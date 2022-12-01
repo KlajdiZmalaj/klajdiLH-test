@@ -20,7 +20,7 @@ export default ({ area }: { area: string }) => {
         <div className="actions">
           <button
             onClick={() => {
-              dispatch(AuthActions.setLoggedUser({}));
+              dispatch(AuthActions.logout());
             }}
             className="logout"
           >

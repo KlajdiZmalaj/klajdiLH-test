@@ -14,7 +14,7 @@ Admin is created from database, manger can be created by admin, client can be re
 Each role has its own permissions (based on permission componets and functions are generated) :
 
 - Admin => [*] (all)
-- Manager => ["order.view","order.update","order.create","menu.view","menu.create","menu.update","menu_item.view","menu_item.create","menu_item.update"];
+- Manager => ["order.view","order.update","order.create","menu.view","menu.create","menu.update","menu_item.view","menu_item.create","menu_item.update","restaurant.view","restaurant.update_menus"];
 - Client => ["restaurant.view","order.view","order.create","order.delete"];
 
 Role admin and manager has view Dashboard as its route and client has view ClientView as its route.
@@ -23,9 +23,9 @@ Role admin and manager has view Dashboard as its route and client has view Clien
 
 Firebase Users :
 
-- Admin => username:root , password:12345
-- Manager => username:mondi , password:123
-- Client => username:kz7 , password:123
+- Admin => e-mail:admin@hunger.net , password:12345
+- Manager => username:klajdizmalaj@icloud.com , password:123456
+- Client => anyone can register
 
 ## Check url online
 
@@ -33,9 +33,7 @@ https://klajdizmalaj.github.io/klajdiLH-test
 
 ## Improvements todo:
 
-- Project is 90% typed, there are some more types to add in future
-- Login can be improved AuthToken or any backend tools (right now we get all users on firebase database and we check for password and username === :p)
-- Css responsive media queries
+- Project is 90% typed, there are some more types to add in future, like generator effects types...
 - Jest test to be done
 
 ## Folder structure >

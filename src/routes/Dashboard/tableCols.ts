@@ -6,9 +6,9 @@ export interface columnPropTypes {
   addonAfter?: any;
 }
 export const usersColumns = [
-  { title: "Name", dataIndex: "full_name", key: "full_name" },
-  { title: "Username", dataIndex: "username", key: "username" },
-  { title: "Role", dataIndex: "role", key: "username" },
+  { title: "Full name", dataIndex: "full_name", key: "full_name" },
+  { title: "E-mail", dataIndex: "email", key: "email" },
+  { title: "Role", dataIndex: "role", key: "role" },
 ] as columnPropTypes[];
 
 export const restaurantsColumns = [

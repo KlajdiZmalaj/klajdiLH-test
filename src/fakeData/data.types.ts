@@ -1,5 +1,7 @@
 export interface userPropTypes {
   id?: number;
+  uid?: string;
+  email?: string;
   username?: string;
   password?: string;
   full_name?: string;
@@ -8,7 +10,7 @@ export interface userPropTypes {
 export interface restaurantPropTypes {
   id?: number;
   name?: string;
-  assigned_managers?: number[];
+  assigned_managers?: string[];
   menus?: number[]; //array of items
   location?: string;
 }

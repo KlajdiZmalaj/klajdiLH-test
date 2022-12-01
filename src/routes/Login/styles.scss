@@ -9,6 +9,14 @@
   width: 100%;
   background: linear-gradient(45deg, #1c2c59, #455b99);
   font-family: "Montserrat", sans-serif;
+  overflow: hidden;
+  &.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    transform: none;
+  }
 }
 .login-box {
   background: #fff;

@@ -16,10 +16,11 @@ interface dataProps {
 }
 
 interface errorProps {
-  response: responseProps;
-  error: errorProps;
-  message: string;
-  data: dataProps;
+  response?: responseProps;
+  error?: errorProps;
+  message?: string;
+  data?: dataProps;
+  description: string;
 }
 
 const hasCode = (error: errorProps, status: any) => {
@@ -38,7 +39,6 @@ export const handleError = (error: errorProps) => {
 
   if (hasCode(error, 401)) {
     //loged out
-    window.store.dispatch({ type: "SET_UNAUTHORIZATION" });
   } else if (error?.message === "Network Error") {
     //network error
   } else if (hasCode(error, 445)) {
@@ -52,7 +52,7 @@ export const handleError = (error: errorProps) => {
   } else {
     notification["error"]({
       message: error.message || error?.response?.data?.message || "error Message",
-      description: error?.response?.data?.errors && Object.values(error.response.data.errors),
+      description: error.description || (error?.response?.data?.errors && Object.values(error.response.data.errors)),
       placement: window.innerWidth <= 1024 ? "topRight" : "bottomRight",
       duration: 4,
     });

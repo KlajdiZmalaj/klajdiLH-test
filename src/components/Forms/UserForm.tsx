@@ -2,8 +2,9 @@ import { Form, Input, Select } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userPropTypes } from "../../fakeData/data.types";
-import { MainActions } from "../../redux-store/models";
+import { AuthActions, MainActions } from "../../redux-store/models";
 import { IRootState } from "../../redux-store/store";
+import { getWithOldValues } from "../../utils";
 import CheckPermissions from "../CheckPermissions";
 export interface formPropTypes {
   modalData?: userPropTypes;
@@ -23,14 +24,16 @@ export default ({ modalData = {}, setModalData = () => {}, isCreating }: formPro
         if (isCreating) {
           //create api
           dispatch(
-            MainActions.createUser({ ...values }, () => {
+            AuthActions.register({ ...values }, () => {
               setModalData({});
               form.resetFields();
             }),
           );
         } else {
           //update api
-          dispatch(MainActions.updateUser({ ...values, id: modalData.id }));
+          const finalObj = getWithOldValues(values, modalData);
+          console.log("update finalObj", modalData, values, finalObj);
+          dispatch(MainActions.updateUser({ ...finalObj, id: modalData.id }));
         }
       }}
       className="userForm form"
@@ -38,11 +41,11 @@ export default ({ modalData = {}, setModalData = () => {}, isCreating }: formPro
       <Form.Item name="full_name" label="Full name" rules={[{ required: isCreating }]}>
         <Input />
       </Form.Item>
-      <Form.Item name="username" label="Username" rules={[{ required: isCreating }]}>
-        <Input />
+      <Form.Item name="email" label="E-mail" rules={[{ required: isCreating, type: "email" }]}>
+        <Input disabled={!isCreating} />
       </Form.Item>
       <Form.Item name="password" label="Password" rules={[{ required: isCreating }]}>
-        <Input.Password />
+        <Input.Password visibilityToggle={{ visible: true }} disabled={!isCreating} />
       </Form.Item>
       <Form.Item name="role" label="Select role" rules={[{ required: isCreating }]}>
         <Select>

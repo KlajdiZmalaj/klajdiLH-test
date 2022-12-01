@@ -66,7 +66,7 @@ export default ({ title, columns, dataSource = [], filterKey, type, isLoading }:
         )}
       </h4>
 
-      <div className="table">
+      <div className={"table" + " table" + type}>
         <div className="table-header">
           {columns.map((col) => {
             return <span key={col.dataIndex}>{col.title}</span>;
@@ -131,7 +131,7 @@ export default ({ title, columns, dataSource = [], filterKey, type, isLoading }:
                           ></i>
                         </Tooltip>
                       </CheckPermissions>
-                      <CheckPermissions allowed={[`${type}.update`]}>
+                      <CheckPermissions allowed={[`${type}.update`, `${type}.update_menus`]}>
                         <Tooltip title="Edit record">
                           <i
                             onClick={() => {

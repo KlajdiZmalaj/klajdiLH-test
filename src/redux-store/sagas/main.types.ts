@@ -33,6 +33,7 @@ export interface crudUserSagaProps {
   user_id?: number;
   type: string;
   restore?: () => void;
+  firstTime?: boolean;
 }
 export interface crudOrderSagaProps {
   params: commonParamsType;

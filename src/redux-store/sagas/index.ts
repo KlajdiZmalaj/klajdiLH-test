@@ -31,5 +31,6 @@ export default function* rootSaga() {
     //AUTH
     ...[takeLatest("LOGIN", AuthGenerators.login)],
     ...[takeLatest("REGISTER", AuthGenerators.register)],
+    ...[takeLatest("LOGOUT", AuthGenerators.logout)],
   ]);
 }
