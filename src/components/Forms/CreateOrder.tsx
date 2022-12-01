@@ -77,7 +77,7 @@ export default () => {
             dispatch(
               MainActions.createOrder(
                 {
-                  data: { ...formData, status: 1, ordered_by: loggedUser.id, date: `${new Date()}` },
+                  data: { ...formData, status: 1, ordered_by: loggedUser.uid, date: `${new Date()}` },
                 },
                 () => {
                   //remove selectedmenu id so he can place another order in the restaurant

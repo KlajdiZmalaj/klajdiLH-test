@@ -24,7 +24,7 @@ export default () => {
         type="order"
         title="My Orders (Ordered by date)"
         dataSource={orders
-          .filter((order) => `${order.ordered_by}` === `${loggedUser.id}`)
+          .filter((order) => `${order.ordered_by}` === `${loggedUser.uid}`)
           .sort((a, b) => new Date(b.date || "").getTime() - new Date(a.date || "").getTime())}
         columns={ordersColumns}
       />
